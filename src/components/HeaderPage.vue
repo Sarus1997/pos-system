@@ -1,6 +1,6 @@
 <template>
   <header class="header">
-    <h1>POS System</h1>
+    <h2>บริษัท แมวขาว อินเตอร์เทค จำกัด (มหาชน)</h2>
   </header>
 </template>
 
