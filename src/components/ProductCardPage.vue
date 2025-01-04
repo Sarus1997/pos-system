@@ -83,33 +83,36 @@ defineProps(['product']);
   transform: translateY(0);
 }
 
-@media (max-width: 1280px) {
+@media (max-width: 1920px) {
   .product-card {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 1rem;
+    padding: 10px;
     border: 1px solid #e0e0e0;
     border-radius: 10px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     background-color: #f7f9fc;
-    /* Updated background color */
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     max-width: 230px;
   }
 
   .product-image {
-    height: 150px;
+    height: 170px;
   }
 
-  .product-name,
+  .product-name {
+    font-size: 13px;
+  }
+
   .product-price {
-    font-size: 1.2rem;
+    font-size: 10px;
   }
 
   .add-to-cart {
     font-size: 0.9rem;
     padding: 0.5rem 1rem;
+    font-size: 12px;
   }
 }
 </style>
