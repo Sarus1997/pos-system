@@ -165,4 +165,69 @@ onMounted(async () => {
   background-color: #ccc;
   cursor: not-allowed;
 }
+
+/* Responsive styles */
+@media (max-width: 1920px) {
+  .pos-page {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 10px;
+  }
+
+  .products-wrapper {
+    flex: 1;
+    margin-right: 10px;
+  }
+
+  .cart-wrapper {
+    flex: 1;
+  }
+
+  .card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
+  }
+
+  .card-header {
+    background-color: #f7fafc;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .card-body {
+    padding: 10px;
+  }
+
+  .products {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+  }
+
+  .pagination button {
+    margin: 0 10px;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    background-color: #48bb78;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .pagination button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+}
 </style>
