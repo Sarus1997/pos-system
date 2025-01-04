@@ -15,20 +15,15 @@
   </div>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      username: '',
-      password: '',
-    };
-  },
-  methods: {
-    handleLogin() {
-      // Implement login logic here
-      alert(`Logging in with username: ${this.username}`);
-    },
-  },
+<script setup>
+import { ref } from 'vue';
+
+const username = ref('');
+const password = ref('');
+
+const handleLogin = () => {
+  // Implement login logic here
+  alert(`Logging in with username: ${username.value}`);
 };
 </script>
 

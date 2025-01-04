@@ -19,8 +19,8 @@ export default {
   flex-direction: column;
   align-items: center;
   padding: 1.5rem;
-  margin-top: 4rem;
-  margin-left: 2rem;
+  margin-top: 10px;
+  margin-left: 1rem;
   border: 1px solid #e0e0e0;
   border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -49,7 +49,7 @@ export default {
 }
 
 .product-name {
-  font-size: 1.4rem;
+  font-size: 1rem;
   font-weight: 600;
   color: #333;
   margin-bottom: 0.75rem;

@@ -9,6 +9,14 @@
     --text-color: #333;
 }
 
+body {
+    color: var(--text-color-light);
+}
+
+body.dark-theme {
+    color: var(--text-color-dark);
+}
+
 * {
     margin: 0;
     padding: 0;

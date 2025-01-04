@@ -8,28 +8,10 @@
         </router-link>
       </li>
       <hr>
-      <li id="s-item">
-        <router-link to="/reports">
-          <font-awesome-icon :icon="['fas', 'chart-line']" />
-          &nbsp; Reports
-        </router-link>
-      </li>
-      <li id="s-item">
-        <router-link to="/pos">
-          <font-awesome-icon :icon="['fas', 'cash-register']" />
-          &nbsp; POS
-        </router-link>
-      </li>
-      <li id="s-item">
-        <router-link to="/settings">
-          <font-awesome-icon :icon="['fas', 'cog']" />
-          &nbsp; Settings
-        </router-link>
-      </li>
-      <li id="s-item">
-        <router-link to="/logout">
-          <font-awesome-icon :icon="['fas', 'sign-out-alt']" />
-          &nbsp; Logout
+      <li id="s-item" v-for="item in menuItems" :key="item.text" type="button">
+        <router-link :to="item.link">
+          <font-awesome-icon :icon="item.icon" />
+          &nbsp; {{ item.text }}
         </router-link>
       </li>
     </ul>
@@ -50,6 +32,32 @@ library.add(faCat, faCashRegister, faChartLine, faCog, faSignOutAlt)
 export default {
   components: {
     FontAwesomeIcon,
+  },
+  data() {
+    return {
+      menuItems: [
+        {
+          text: 'Reports',
+          link: '/reports',
+          icon: ['fas', 'chart-line'],
+        },
+        {
+          text: 'POS',
+          link: '/pos',
+          icon: ['fas', 'cash-register'],
+        },
+        {
+          text: 'Settings',
+          link: '/settings',
+          icon: ['fas', 'cog'],
+        },
+        {
+          text: 'Logout',
+          link: '/logout',
+          icon: ['fas', 'sign-out-alt'],
+        },
+      ],
+    }
   },
 }
 </script>
@@ -73,12 +81,15 @@ export default {
 #s-item {
   font-size: 18px;
   color: #fff;
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+  cursor: pointer;
 }
 
 #s-item:hover {
   background-color: #89f5ea;
   color: #000;
-  cursor: pointer;
 }
 
 .sidebar ul {

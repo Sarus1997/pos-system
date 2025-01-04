@@ -17,20 +17,40 @@
             <td><input type="number" v-model.number="item.quantity" class="quantity-input" /></td>
             <td>{{ item.price }}</td>
             <td>{{ item.quantity * item.price }}</td>
-            <td><button @click="$emit('remove-item', item.id)" class="remove-btn">Remove</button></td>
+            <td><button @click="removeItem(item.id)" class="remove-btn">Remove</button></td>
           </tr>
         </tbody>
       </table>
     </div>
-    <button @click="$emit('complete-sale')" class="complete-sale-btn">Complete Sale</button>
+    <button @click="completeSale" class="complete-sale-btn">Complete Sale</button>
   </div>
 </template>
 
-<script>
-export default {
-  props: ['cart'],
+<script setup>
+import { defineEmits, defineProps } from 'vue';
+
+// Define props
+defineProps({
+  cart: {
+    type: Array,
+    required: true,
+  },
+});
+
+// Define emits
+const emit = defineEmits(['remove-item', 'complete-sale']);
+
+// Event handlers
+const removeItem = (id) => {
+  emit('remove-item', id);
+};
+
+const completeSale = () => {
+  emit('complete-sale');
 };
 </script>
+
+
 
 <style scoped>
 .cart-container {
