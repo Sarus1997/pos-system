@@ -1,11 +1,15 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import PosPage from '../pages/PosPage.vue'; // ตรวจสอบ path ของ PosPage.vue
+import PosPage from '../pages/PosPage.vue';
+import LogoutPage from '../pages/LogoutPage.vue';
+import ReportsPage from '../pages/ReportsPage.vue';
+import SettingsPage from '../pages/SettingsPage.vue';
 
 const routes = [
   { path: '/', component: PosPage },
-  // { path: '/reports', component: () => import('./pages/ReportsPage.vue') },
-  // { path: '/settings', component: () => import('./pages/SettingsPage.vue') },
-  // { path: '/logout', component: () => import('./pages/LogoutPage.vue') },
+  { path: '/pos', component: PosPage },
+  { path: "/reports", component: ReportsPage },
+  { path: "/settings", component: SettingsPage },
+  { path: "/logout", component: LogoutPage },
 ];
 
 const router = createRouter({

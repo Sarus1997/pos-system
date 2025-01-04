@@ -12,6 +12,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 import ProductCard from '../components/ProductCardPage.vue';
 import CartTable from '../components/CartTablePage.vue';
 
@@ -19,16 +20,33 @@ export default {
   components: { ProductCard, CartTable },
   data() {
     return {
-      products: [
-        { id: 1, name: 'Apple', price: 50 },
-        { id: 2, name: 'Banana', price: 20 },
-        { id: 3, name: 'Orange', price: 30 },
-        { id: 4, name: 'Apple', price: 50 },
-        { id: 5, name: 'Banana', price: 20 },
-        { id: 6, name: 'Orange', price: 30 },
-      ],
+      products: [],
       cart: [],
     };
+  },
+  async created() {
+    try {
+      const response = await axios.post('http://localhost:4000/api2/get_all_product', {
+        filter: {},
+      }, {
+        headers: {
+          Authorization: 'Token eyJhY2NvdW50IjoiQUNDT1VOVF9TWU5DOjE3MzExNDM4MTI4NTkuODk2MjAzIiwiaWQiOiJDVVNUT01FUjoxNzMwNjg1NTY0Mzg0LjMwMzAyMCIsImdyb3VwIjoidXNlcjpjdXN0b21lciIsIm9mZmljZV9pZCI6Ik9GRklDRTowMDEiLCJkYXRlIjoxNzMxNTYwMDg5Mzc0fQ==!IcYueH98Vx4wrffC57Xh39pLSYwu4SNW0WfTzQcs75M=',
+        },
+      });
+      console.log('API response:', response.data); // ตรวจสอบข้อมูลที่ได้จาก API
+      if (response.data.details.status === 'success') {
+        this.products = response.data.result.data.map((item) => ({
+          id: item.product_id,
+          name: item.product_name,
+          price: item.price,
+          image: item.image_url,
+        }));
+      } else {
+        console.error('Error fetching data:', response.data.details.reason);
+      }
+    } catch (error) {
+      console.error('API call failed:', error);
+    }
   },
   methods: {
     addToCart(product) {

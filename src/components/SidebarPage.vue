@@ -15,6 +15,12 @@
         </router-link>
       </li>
       <li id="s-item">
+        <router-link to="/pos">
+          <font-awesome-icon :icon="['fas', 'cash-register']" />
+          &nbsp; POS
+        </router-link>
+      </li>
+      <li id="s-item">
         <router-link to="/settings">
           <font-awesome-icon :icon="['fas', 'cog']" />
           &nbsp; Settings
@@ -37,9 +43,9 @@
 <script>
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faCat, faChartLine, faCog, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
+import { faCat, faCashRegister, faChartLine, faCog, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
 
-library.add(faCat, faChartLine, faCog, faSignOutAlt)
+library.add(faCat, faCashRegister, faChartLine, faCog, faSignOutAlt)
 
 export default {
   components: {

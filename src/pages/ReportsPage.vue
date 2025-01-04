@@ -1,13 +1,13 @@
-<!-- <template>
+<template>
   <div>
-    <h2>Reports</h2>
-    <button @click="exportReport">Export Report</button>
+    <h2>รายงาน</h2>
+    <button @click="exportReport">ส่งออกรายงาน</button>
     <table>
       <thead>
         <tr>
-          <th>Date</th>
-          <th>Product</th>
-          <th>Total Sales</th>
+          <th>วันที่</th>
+          <th>สินค้า</th>
+          <th>ยอดขายรวม</th>
         </tr>
       </thead>
       <tbody>
@@ -26,14 +26,14 @@ export default {
   data() {
     return {
       reports: [
-        { id: 1, date: '2025-01-01', product: 'Apple', total: 500 },
-        { id: 2, date: '2025-01-02', product: 'Banana', total: 300 },
+        { id: 1, date: '2025-01-01', product: 'แอปเปิ้ล', total: 500 },
+        { id: 2, date: '2025-01-02', product: 'กล้วย', total: 300 },
       ],
     };
   },
   methods: {
     exportReport() {
-      alert('Report Exported Successfully!');
+      alert('ส่งออกรายงานสำเร็จ!');
     },
   },
 };
@@ -60,4 +60,4 @@ button {
   border: none;
   cursor: pointer;
 }
-</style> -->
+</style>
