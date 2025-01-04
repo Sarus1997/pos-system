@@ -29,7 +29,6 @@
 <script setup>
 import { defineEmits, defineProps } from 'vue';
 
-// Define props
 defineProps({
   cart: {
     type: Array,
@@ -37,14 +36,10 @@ defineProps({
   },
 });
 
-// Define emits
 const emit = defineEmits(['remove-item', 'complete-sale']);
-
-// Event handlers
 const removeItem = (id) => {
   emit('remove-item', id);
 };
-
 const completeSale = () => {
   emit('complete-sale');
 };

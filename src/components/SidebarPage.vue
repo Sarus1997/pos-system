@@ -22,45 +22,42 @@
   </aside>
 </template>
 
-<script>
+<script setup>
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faCat, faCashRegister, faChartLine, faCog, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
 
 library.add(faCat, faCashRegister, faChartLine, faCog, faSignOutAlt)
 
-export default {
-  components: {
-    FontAwesomeIcon,
+const menuItems = [
+  {
+    text: 'Reports',
+    link: '/reports',
+    icon: ['fas', 'chart-line'],
   },
-  data() {
-    return {
-      menuItems: [
-        {
-          text: 'Reports',
-          link: '/reports',
-          icon: ['fas', 'chart-line'],
-        },
-        {
-          text: 'POS',
-          link: '/pos',
-          icon: ['fas', 'cash-register'],
-        },
-        {
-          text: 'Settings',
-          link: '/settings',
-          icon: ['fas', 'cog'],
-        },
-        {
-          text: 'Logout',
-          link: '/logout',
-          icon: ['fas', 'sign-out-alt'],
-        },
-      ],
-    }
+  {
+    text: 'POS',
+    link: '/pos',
+    icon: ['fas', 'cash-register'],
   },
-}
+  {
+    text: 'Settings',
+    link: '/settings',
+    icon: ['fas', 'cog'],
+  },
+  {
+    text: 'Logout',
+    link: '/logout',
+    icon: ['fas', 'sign-out-alt'],
+  },
+]
 </script>
+
+<style scoped>
+/* Add your styles here */
+</style>
+
+
 <style scoped>
 .sidebar {
   background-color: #1f2937;

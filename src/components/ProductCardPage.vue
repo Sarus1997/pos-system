@@ -1,17 +1,16 @@
 <template>
   <div class="product-card">
-    <img :src="product.image" alt="product.name" class="product-image">
+    <img :src="product.image" alt="product.name" class="product-image" />
     <p class="product-name">{{ product.name }}</p>
     <p class="product-price">{{ product.price }} THB</p>
     <button class="add-to-cart" @click="$emit('add-to-cart', product)">Add to Cart</button>
   </div>
 </template>
 
-<script>
-export default {
-  props: ['product'],
-};
+<script setup>
+defineProps(['product']);
 </script>
+
 
 <style scoped>
 .product-card {

@@ -30,13 +30,11 @@ import axios from 'axios';
 import ProductCard from '../components/ProductCardPage.vue';
 import CartTable from '../components/CartTablePage.vue';
 
-// State variables
 const products = ref([]);
 const cart = ref([]);
 const currentPage = ref(1);
 const itemsPerPage = 6;
 
-// Computed properties
 const totalPages = computed(() => Math.ceil(products.value.length / itemsPerPage));
 const paginatedProducts = computed(() => {
   const start = (currentPage.value - 1) * itemsPerPage;
@@ -44,7 +42,6 @@ const paginatedProducts = computed(() => {
   return products.value.slice(start, end);
 });
 
-// Methods
 const addToCart = (product) => {
   const item = cart.value.find((item) => item.id === product.id);
   if (item) {
@@ -80,7 +77,6 @@ const nextPage = () => {
   }
 };
 
-// Fetch data on component mount
 onMounted(async () => {
   try {
     const response = await axios.post('http://localhost:4000/api2/get_all_product', {

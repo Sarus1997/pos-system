@@ -2,7 +2,7 @@
   <div class="app-container">
     <Sidebar />
     <div class="main-content">
-      <Header />
+      <AppHeader />
       <router-view />
     </div>
   </div>
@@ -10,14 +10,14 @@
 
 <script>
 import Sidebar from './components/SidebarPage.vue';
-import Header from './components/HeaderPage.vue';
+import AppHeader from './components/HeaderPage.vue';
 
 export default {
-  components: { Sidebar, Header },
+  components: { Sidebar, AppHeader }
 };
 </script>
 
-<style>
+<style scoped>
 .app-container {
   display: flex;
   height: 100vh;
