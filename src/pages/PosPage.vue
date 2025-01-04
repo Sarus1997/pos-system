@@ -1,3 +1,4 @@
+<!-- eslint-disable no-unused-vars -->
 <template>
   <div class="pos-page">
     <div class="products-wrapper card">
@@ -27,7 +28,11 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue';
 import axios from 'axios';
+
+// eslint-disable-next-line no-unused-vars
 import ProductCard from '../components/ProductCardPage.vue';
+
+// eslint-disable-next-line no-unused-vars
 import CartTable from '../components/CartTablePage.vue';
 
 const products = ref([]);
@@ -36,12 +41,15 @@ const currentPage = ref(1);
 const itemsPerPage = 6;
 
 const totalPages = computed(() => Math.ceil(products.value.length / itemsPerPage));
+
+// eslint-disable-next-line no-unused-vars
 const paginatedProducts = computed(() => {
   const start = (currentPage.value - 1) * itemsPerPage;
   const end = start + itemsPerPage;
   return products.value.slice(start, end);
 });
 
+// eslint-disable-next-line no-unused-vars
 const addToCart = (product) => {
   const item = cart.value.find((item) => item.id === product.id);
   if (item) {
@@ -51,26 +59,31 @@ const addToCart = (product) => {
   }
 };
 
+// eslint-disable-next-line no-unused-vars
 const updateCart = (updatedCart) => {
   cart.value = updatedCart;
 };
 
+// eslint-disable-next-line no-unused-vars
 const removeItem = (productId) => {
   cart.value = cart.value.filter((item) => item.id !== productId);
 };
 
+// eslint-disable-next-line no-unused-vars
 const completeSale = () => {
   const total = cart.value.reduce((sum, item) => sum + item.quantity * item.price, 0);
   alert(`Sale completed! Total: ${total} THB`);
   cart.value = [];
 };
 
+// eslint-disable-next-line no-unused-vars
 const prevPage = () => {
   if (currentPage.value > 1) {
     currentPage.value--;
   }
 };
 
+// eslint-disable-next-line no-unused-vars
 const nextPage = () => {
   if (currentPage.value < totalPages.value) {
     currentPage.value++;

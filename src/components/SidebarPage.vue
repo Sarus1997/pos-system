@@ -17,46 +17,51 @@
     </ul>
 
     <div class="footer">
-      <p>© {{ new Date().getFullYear() }} POS - แมวขาว</p>
+      <p style="font-size: 14px">© {{ new Date().getFullYear() }} POS System</p>
+      <p style="font-size: 14px">บริษัท แมวขาว อินเตอร์เทค จำกัด (มหาชน)</p>
     </div>
   </aside>
 </template>
 
-<script setup>
+<script>
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faCat, faCashRegister, faChartLine, faCog, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
 
 library.add(faCat, faCashRegister, faChartLine, faCog, faSignOutAlt)
 
-const menuItems = [
-  {
-    text: 'Reports',
-    link: '/reports',
-    icon: ['fas', 'chart-line'],
+export default {
+  components: {
+    FontAwesomeIcon,
   },
-  {
-    text: 'POS',
-    link: '/pos',
-    icon: ['fas', 'cash-register'],
+  data() {
+    return {
+      menuItems: [
+        {
+          text: 'Reports',
+          link: '/reports',
+          icon: ['fas', 'chart-line'],
+        },
+        {
+          text: 'POS',
+          link: '/pos',
+          icon: ['fas', 'cash-register'],
+        },
+        {
+          text: 'Settings',
+          link: '/settings',
+          icon: ['fas', 'cog'],
+        },
+        {
+          text: 'Logout',
+          link: '/logout',
+          icon: ['fas', 'sign-out-alt'],
+        },
+      ],
+    }
   },
-  {
-    text: 'Settings',
-    link: '/settings',
-    icon: ['fas', 'cog'],
-  },
-  {
-    text: 'Logout',
-    link: '/logout',
-    icon: ['fas', 'sign-out-alt'],
-  },
-]
+}
 </script>
-
-<style scoped>
-/* Add your styles here */
-</style>
-
 
 <style scoped>
 .sidebar {
@@ -111,6 +116,8 @@ const menuItems = [
   background-color: #1f2937;
   color: #fff;
   text-align: center;
+  justify-self: center;
+  margin-left: 35px;
 }
 
 @media (max-width: 1280px) {
