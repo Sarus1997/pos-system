@@ -1,24 +1,28 @@
-# pos-system
+# POS System
 
-## Project setup
+## Project Setup
+To set up the project, run the following command:
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### Development
+To compile and hot-reload for development, use:
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
+### Production
+To compile and minify for production, use:
 ```
 npm run build
 ```
 
-### Lints and fixes files
+### Linting
+To lint and fix files, use:
 ```
 npm run lint
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### Configuration
+For more information on how to customize the configuration, see the [Configuration Reference](https://cli.vuejs.org/config/).
