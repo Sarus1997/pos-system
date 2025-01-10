@@ -1,4 +1,3 @@
-<!-- eslint-disable no-unused-vars -->
 <template>
   <div class="pos-page">
     <div class="products-wrapper card">
@@ -9,10 +8,10 @@
             @add-to-cart="addToCart" />
         </div>
         <div class="pagination">
-          <button @click="prevPage" :disabled="currentPage === 1"><i class="fas fa-chevron-left"></i> Previous</button>
+          <button @click="prevPage" :disabled="currentPage === 1"><i class="fas fa-chevron-left"></i> ⫷ </button>
           <span>Page {{ currentPage }} of {{ totalPages }}</span>
-          <button @click="nextPage" :disabled="currentPage === totalPages">Next <i
-              class="fas fa-chevron-right"></i></button>
+          <button @click="nextPage" :disabled="currentPage === totalPages"><i class="fas fa-chevron-right"></i> ⫸
+          </button>
         </div>
       </div>
     </div>
@@ -28,28 +27,22 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue';
 import axios from 'axios';
-
-// eslint-disable-next-line no-unused-vars
 import ProductCard from '../components/ProductCardPage.vue';
-
-// eslint-disable-next-line no-unused-vars
 import CartTable from '../components/CartTablePage.vue';
 
 const products = ref([]);
 const cart = ref([]);
 const currentPage = ref(1);
-const itemsPerPage = 6;
+const itemsPerPage = 3;
 
 const totalPages = computed(() => Math.ceil(products.value.length / itemsPerPage));
 
-// eslint-disable-next-line no-unused-vars
 const paginatedProducts = computed(() => {
   const start = (currentPage.value - 1) * itemsPerPage;
   const end = start + itemsPerPage;
   return products.value.slice(start, end);
 });
 
-// eslint-disable-next-line no-unused-vars
 const addToCart = (product) => {
   const item = cart.value.find((item) => item.id === product.id);
   if (item) {
@@ -59,31 +52,26 @@ const addToCart = (product) => {
   }
 };
 
-// eslint-disable-next-line no-unused-vars
 const updateCart = (updatedCart) => {
   cart.value = updatedCart;
 };
 
-// eslint-disable-next-line no-unused-vars
 const removeItem = (productId) => {
   cart.value = cart.value.filter((item) => item.id !== productId);
 };
 
-// eslint-disable-next-line no-unused-vars
 const completeSale = () => {
   const total = cart.value.reduce((sum, item) => sum + item.quantity * item.price, 0);
   alert(`Sale completed! Total: ${total} THB`);
   cart.value = [];
 };
 
-// eslint-disable-next-line no-unused-vars
 const prevPage = () => {
   if (currentPage.value > 1) {
     currentPage.value--;
   }
 };
 
-// eslint-disable-next-line no-unused-vars
 const nextPage = () => {
   if (currentPage.value < totalPages.value) {
     currentPage.value++;
@@ -92,7 +80,7 @@ const nextPage = () => {
 
 onMounted(async () => {
   try {
-    const response = await axios.post('http://localhost:4000/api2/get_all_product', {
+    const response = await axios.post('http://localhost:4000/api2/product_list', {
       filter: {},
     }, {
       headers: {
@@ -104,8 +92,10 @@ onMounted(async () => {
       products.value = response.data.result.data.map((item) => ({
         id: item.product_id,
         name: item.product_name,
-        price: item.price,
         image: item.image_url,
+        price: item.price,
+        category: item.category,
+        quantity: item.quantity,
       }));
     } else {
       console.error('Error fetching data:', response.data.details.reason);
@@ -141,9 +131,13 @@ onMounted(async () => {
 }
 
 .card-header {
-  background-color: #f7fafc;
+  background-color: #567fbd;
   padding: 0.5rem;
   border-bottom: 1px solid #ddd;
+  color: white;
+  text-align: center;
+  font-weight: bold;
+  font-family: 'Lato', sans-serif;
 }
 
 .card-body {
@@ -205,9 +199,10 @@ onMounted(async () => {
   }
 
   .card-header {
-    background-color: #f7fafc;
     padding: 10px;
     border-bottom: 1px solid #ddd;
+    border-radius: 8px 8px 0 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
 
   .card-body {

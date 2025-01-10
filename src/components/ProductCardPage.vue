@@ -1,16 +1,23 @@
 <template>
   <div class="product-card">
-    <img :src="product.image" alt="product.name" class="product-image" />
-    <p class="product-name">{{ product.name }}</p>
-    <p class="product-price">{{ product.price }} THB</p>
-    <button class="add-to-cart" @click="$emit('add-to-cart', product)">Add to Cart</button>
+    <div class="product-image-wrapper">
+      <img :src="product.image" alt="product.name" class="product-image" />
+    </div>
+    <div class="product-info">
+      <p class="product-name">{{ product.name }}</p>
+      <p class="product-price">{{ product.price }} THB</p>
+      <p class="product-quantity">{{ product.quantity }} in stock</p>
+    </div>
+    <button class="add-to-cart" @click="$emit('add-to-cart', product)">
+      <i class="fas fa-shopping-cart"></i>
+      Add to Cart
+    </button>
   </div>
 </template>
 
 <script setup>
 defineProps(['product']);
 </script>
-
 
 <style scoped>
 .product-card {
@@ -34,17 +41,29 @@ defineProps(['product']);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
 }
 
-.product-image {
+.product-image-wrapper {
   width: 100%;
   height: 200px;
-  object-fit: cover;
   border-radius: 10px;
+  overflow: hidden;
   margin-bottom: 1.5rem;
   transition: transform 0.3s ease;
 }
 
-.product-image:hover {
+.product-image-wrapper:hover {
   transform: scale(1.05);
+}
+
+.product-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.product-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .product-name {
@@ -62,6 +81,14 @@ defineProps(['product']);
   font-weight: 500;
 }
 
+.product-quantity {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 0.75rem;
+  text-align: center;
+}
+
 .add-to-cart {
   background-color: #48bb78;
   color: white;
@@ -72,6 +99,9 @@ defineProps(['product']);
   font-weight: bold;
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .add-to-cart:hover {
@@ -97,7 +127,7 @@ defineProps(['product']);
     max-width: 230px;
   }
 
-  .product-image {
+  .product-image-wrapper {
     height: 170px;
   }
 

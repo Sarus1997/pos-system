@@ -113,20 +113,73 @@ export default {
   bottom: 0;
   left: 0;
   padding: 1rem;
-  background-color: #1f2937;
+  background-color: #363e46;
   color: #fff;
   text-align: center;
   justify-self: center;
-  margin-left: 35px;
+  width: 350px;
 }
 
-@media (max-width: 1280px) {
+@media (max-width: 1920px) {
   .sidebar {
     width: 300px;
     max-width: 100%;
-    position: relative;
-    top: auto;
-    left: auto;
+    background-color: #1f2937;
+    color: #fff;
+    padding: 1.5rem;
+    height: 100%;
+    width: 100%;
+    max-width: 350px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  #s-logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+    cursor: pointer;
+  }
+
+  #s-item {
+    font-size: 18px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    padding: 0.75rem;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+  }
+
+  #s-item:hover {
+    background-color: #89f5ea;
+    color: #000;
+  }
+
+  .sidebar ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .sidebar li {
+    margin: 1.5rem 0;
+  }
+
+  .sidebar a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    padding: 1.5rem;
+    background-color: #363e46;
+    color: #fff;
+    text-align: center;
+    justify-self: center;
+    width: 100%;
+    max-width: 350px;
   }
 }
 </style>
