@@ -33,7 +33,7 @@ import CartTable from '../components/CartTablePage.vue';
 const products = ref([]);
 const cart = ref([]);
 const currentPage = ref(1);
-const itemsPerPage = 3;
+const itemsPerPage = 6;
 
 const totalPages = computed(() => Math.ceil(products.value.length / itemsPerPage));
 
