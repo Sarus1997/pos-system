@@ -102,9 +102,7 @@ export default {
         this.errorMessage = 'กรุณาใส่เลขที่ใบสั่งซื้อ';
         return;
       }
-
       this.errorMessage = '';
-
       try {
         const response = await fetch('http://localhost:4000/api2/get_receipt_2', {
           method: 'POST',
@@ -115,11 +113,9 @@ export default {
           },
           body: JSON.stringify({ order_id: this.orderId }),
         });
-
         if (!response.ok) {
           throw new Error(`HTTP Error: ${response.status}`);
         }
-
         const result = await response.json();
         const receiptData = result.result?.data?.[0];
 
@@ -144,9 +140,229 @@ export default {
       }
 
       this.errorMessage = '';
-      window.print();
+
+      const printWindow = window.open('', '_blank');
+      printWindow.document.write(`
+        <html>
+        <head>
+          <title>Print Receipt</title>
+          <style>
+            @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@100..900&display=swap');
+
+            body {
+              font-family: "Noto Sans Thai", serif;
+              font-optical-sizing: auto;
+              font-weight: 300;
+              font-style: normal;
+              font-variation-settings: "wdth" 100;
+              line-height: 1.5;
+              margin: 0;
+              padding: 20px;
+              box-sizing: border-box;
+              background-color: #f0f0f0;
+              color: #333;
+            }
+
+            .receipt {
+              max-width: 800px;
+              margin: 0 auto;
+              background: #fff;
+              padding: 40px;
+              border-radius: 8px;
+              box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            }
+
+            .header {
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              margin-bottom: 30px;
+              border-bottom: 2px solid #333;
+              padding-bottom: 20px;
+            }
+
+            .header img {
+              width: 150px;
+              margin-right: 20px;
+            }
+
+            #img {
+              width: 50px;
+            }
+
+            .header h1 {
+              font-size: 20px;
+              margin: 0;
+              flex-grow: 1;
+              text-align: center;
+              margin-right: 80px;
+            }
+
+            .input-group {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              margin-bottom: 30px;
+            }
+
+            .input-group-label {
+              margin-right: 10px;
+              font-weight: bold;
+            }
+
+            .input-group-input {
+              padding: 8px;
+              border-radius: 4px;
+              border: 1px solid #ccc;
+              margin-right: 10px;
+            }
+
+            .input-get-data {
+              padding: 10px 16px;
+              font-size: 12px;
+              width: 100px;
+              border: none;
+              border-radius: 4px;
+              background-color: #00ff1a;
+              color: #fff;
+              cursor: pointer;
+              margin-right: 10px;
+              transition: all 0.3s ease;
+            }
+
+            .input-get-data:hover {
+              background-color: #00ff1a90;
+            }
+
+            .input-print {
+              padding: 10px 16px;
+              font-size: 12px;
+              width: 100px;
+              border: none;
+              border-radius: 4px;
+              background-color: #ff004c;
+              color: white;
+              cursor: pointer;
+              transition: all 0.3s ease;
+            }
+
+            .input-print:hover {
+              background-color: #ff004c90;
+            }
+
+            .info {
+              display: grid;
+              grid-template-columns: repeat(2, 1fr);
+              gap: 20px;
+              margin-bottom: 30px;
+            }
+
+            .info p {
+              margin: 8px 0;
+              font-size: 12px;
+            }
+
+            .products {
+              width: 100%;
+              border-collapse: collapse;
+              margin: 30px 0;
+            }
+
+            .products th,
+            .products td {
+              padding: 12px;
+              text-align: left;
+              border: 1px solid #ddd;
+            }
+
+            .products th {
+              background-color: #f8f8f8;
+              font-weight: 600;
+              font-size: 14px;
+              text-align: center;
+            }
+
+            #products_list {
+              font-size: 12px;
+              line-height: 1.5;
+              margin-bottom: 20px;
+              border-bottom: 1px solid #ddd;
+            }
+
+            .products tr:last-child td {
+              border-bottom: none;
+            }
+
+            .total {
+              text-align: right;
+              font-size: 14px;
+              font-weight: bold;
+              padding: 20px 0;
+              border-top: 2px solid #333;
+            }
+
+            .error-message {
+              color: red;
+              text-align: center;
+              padding: 20px;
+              font-weight: bold;
+            }
+          </style>
+        </head>
+        <body>
+          <div class="receipt">
+            <div class="header">
+              <img id="img" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Wikimedia-logo.png" alt="Company Logo" />
+              <h1>ใบเสร็จรับเงิน</h1>
+            </div>
+            <div class="info">
+              <div>
+                <p><strong>เลขที่ใบเสร็จ:</strong> ${this.receipt.order_id}</p>
+                <p><strong>วันที่:</strong> ${this.formattedOrderDate}</p>
+              </div>
+              <div>
+                <p><strong>เลขที่การชำระเงิน:</strong> ${this.receipt.payment_id}</p>
+                <p><strong>วิธีการชำระเงิน:</strong> ${this.receipt.payment_method}</p>
+              </div>
+            </div>
+            <table class="products">
+              <thead>
+                <tr>
+                  <th>รายการสินค้า</th>
+                  <th>จำนวน</th>
+                  <th>ราคาต่อชิ้น</th>
+                  <th>ราคาที่ลด</th>
+                  <th>ราคารวม</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${this.receipt.products.map(product => `
+                  <tr>
+                    <td>${product.product_name}</td>
+                    <td style="text-align: right;">${product.quantity ? product.quantity.toLocaleString('th-TH') + ' ชิ้น' : '-'}</td>
+                    <td style="text-align: right;">${product.price ? product.price.toLocaleString('th-TH') + ' บาท' : '-'}</td>
+                    <td style="text-align: right;">${product.discount ? product.discount.toLocaleString('th-TH') + ' บาท' : '-'}</td>
+                    <td style="text-align: right;">${product.total ? product.total.toLocaleString('th-TH') + ' บาท' : '-'}</td>
+                  </tr>
+                `).join('')}
+                ${this.receipt.products.length === 0 ? `
+                  <tr>
+                    <td colspan="5" style="text-align: center;">ไม่มีข้อมูลสินค้า</td>
+                  </tr>
+                ` : ''}
+              </tbody>
+            </table>
+            <div class="total">
+              <p>ยอดรวมทั้งสิ้น: ${this.formattedTotalAmount}</p>
+            </div>
+          </div>
+        </body>
+        </html>
+      `);
+      printWindow.document.close();
+      printWindow.print();
     },
-  },
+  }
 };
 </script>
 
@@ -310,46 +526,5 @@ body {
   text-align: center;
   padding: 20px;
   font-weight: bold;
-}
-
-
-@media print {
-  body {
-    background-color: white;
-    color: black;
-    margin: 0;
-  }
-
-  .input-group,
-  .error-message {
-    display: none;
-  }
-
-  .receipt {
-    box-shadow: none;
-    border: none;
-    padding: 0;
-  }
-
-  .receipt .header {
-    margin-bottom: 20px;
-    border-bottom: 1px solid black;
-  }
-
-  .receipt h1 {
-    font-size: 24px;
-  }
-
-  .products th,
-  .products td {
-    font-size: 12px;
-    padding: 8px;
-  }
-
-  .total {
-    font-size: 16px;
-    font-weight: bold;
-  }
-
 }
 </style>
