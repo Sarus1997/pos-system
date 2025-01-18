@@ -48,6 +48,11 @@ export default {
           icon: ['fas', 'cash-register'],
         },
         {
+          text: 'Eceipt',
+          link: '/eceipt',
+          icon: ['fas', 'cash-register'],
+        },
+        {
           text: 'Settings',
           link: '/settings',
           icon: ['fas', 'cog'],
