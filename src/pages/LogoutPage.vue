@@ -1,34 +1,26 @@
 <template>
-  <div class="login-page">
-    <form class="login-form" @submit.prevent="handleLogin">
-      <h2>Login</h2>
-      <div class="form-group">
-        <label for="username">Username:</label>
-        <input type="text" id="username" v-model="username" required />
-      </div>
-      <div class="form-group">
-        <label for="password">Password:</label>
-        <input type="password" id="password" v-model="password" required />
-      </div>
-      <button type="submit" class="login-btn">Login</button>
+  <div class="logout-page">
+    <form class="logout-form" @submit.prevent="handleLogout">
+      <h2>Logout</h2>
+      <p>Are you sure you want to logout?</p>
+      <button type="submit" class="logout-btn">Logout</button>
     </form>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 
-const username = ref('');
-const password = ref('');
+const router = useRouter();
 
-const handleLogin = () => {
-  // Implement login logic here
-  alert(`Logging in with username: ${username.value}`);
+const handleLogout = () => {
+  localStorage.removeItem('token');
+  router.push({ name: 'Login' });
 };
 </script>
 
 <style scoped>
-.login-page {
+.logout-page {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -36,31 +28,14 @@ const handleLogin = () => {
   background-color: #f3f4f6;
 }
 
-.login-form {
+.logout-form {
   background-color: white;
   padding: 2rem;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.form-group {
-  margin-bottom: 1rem;
-}
-
-label {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-weight: bold;
-}
-
-input {
-  width: 100%;
-  padding: 0.5rem;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-}
-
-.login-btn {
+.logout-btn {
   background-color: #48bb78;
   color: white;
   padding: 0.75rem 1.5rem;
@@ -71,7 +46,7 @@ input {
   transition: background-color 0.3s ease;
 }
 
-.login-btn:hover {
+.logout-btn:hover {
   background-color: #38a169;
 }
 </style>

@@ -26,9 +26,9 @@
 <script>
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faCat, faCashRegister, faChartLine, faCog, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
+import { faCat, faCashRegister, faChartLine, faCog, faSignOutAlt, faSignInAlt, faFileInvoice } from '@fortawesome/free-solid-svg-icons'
 
-library.add(faCat, faCashRegister, faChartLine, faCog, faSignOutAlt)
+library.add(faCat, faCashRegister, faChartLine, faCog, faSignOutAlt, faSignInAlt, faFileInvoice)
 
 export default {
   components: {
@@ -36,9 +36,10 @@ export default {
   },
   data() {
     return {
+      isLoggedIn: false,
       menuItems: [
         {
-          text: 'Reports',
+          text: 'รายงาน',
           link: '/reports',
           icon: ['fas', 'chart-line'],
         },
@@ -48,25 +49,39 @@ export default {
           icon: ['fas', 'cash-register'],
         },
         {
-          text: 'Eceipt',
+          text: "ใบเสร็จ",
           link: '/eceipt',
-          icon: ['fas', 'cash-register'],
+          icon: ['fas', 'file-invoice'],
         },
         {
-          text: 'Settings',
+          text: 'ตั้งค่า',
           link: '/settings',
           icon: ['fas', 'cog'],
         },
         {
-          text: 'Logout',
-          link: '/logout',
-          icon: ['fas', 'sign-out-alt'],
+          text: this.isLoggedIn ? 'ออกจากระบบ' : 'เข้าสู่ระบบ',
+          link: this.isLoggedIn ? '/logout' : '/login',
+          icon: this.isLoggedIn ? ['fas', 'sign-out-alt'] : ['fas', 'sign-in-alt'],
         },
       ],
     }
   },
+  watch: {
+    isLoggedIn(newStatus) {
+      this.updateMenuItems(newStatus);
+    },
+  },
+  methods: {
+    updateMenuItems(isLoggedIn) {
+      this.menuItems[this.menuItems.length - 1].text = isLoggedIn ? 'Logout' : 'Login';
+      this.menuItems[this.menuItems.length - 1].link = isLoggedIn ? '/logout' : '/login';
+      this.menuItems[this.menuItems.length - 1].icon = isLoggedIn ? ['fas', 'sign-out-alt'] : ['fas', 'sign-in-alt'];
+    },
+  },
 }
 </script>
+
+
 
 <style scoped>
 .sidebar {
