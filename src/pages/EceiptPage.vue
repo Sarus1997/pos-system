@@ -1,13 +1,16 @@
 <template>
   <div id="app">
+    <br>
     <div class="input-group">
       <label for="order_id_input" class="input-group-label">ใส่เลขที่ใบสั่งซื้อ:</label>
       <input type="text" v-model="orderId" placeholder="Order ID" class="input-group-input" />
       <button @click="fetchReceiptData" class="input-get-data">
-        <i class="fas fa-search"></i> Get Data
+        <i class="fas fa-search"></i>
+        <h3>Get Data</h3>
       </button>
       <button @click="printReceipt" class="input-print">
-        <i class="fas fa-print"></i> Print
+        <i class="fas fa-print"></i>
+        <h3>Print</h3>
       </button>
     </div>
 
@@ -211,7 +214,7 @@ export default {
               border: none;
               border-radius: 4px;
               background-color: #00ff1a;
-              color: #fff;
+              color: #111;
               cursor: pointer;
               margin-right: 10px;
               transition: all 0.3s ease;
@@ -219,6 +222,7 @@ export default {
 
             .input-get-data:hover {
               background-color: #00ff1a90;
+              color: #fff;
             }
 
             .input-print {
@@ -228,13 +232,14 @@ export default {
               border: none;
               border-radius: 4px;
               background-color: #ff004c;
-              color: white;
+              color: #111;
               cursor: pointer;
               transition: all 0.3s ease;
             }
 
             .input-print:hover {
               background-color: #ff004c90;
+              color: #fff;
             }
 
             .info {
@@ -427,7 +432,7 @@ body {
 .input-get-data {
   padding: 10px 16px;
   font-size: 12px;
-  width: 100px;
+  width: 120px;
   border: none;
   border-radius: 4px;
   background-color: #00ff1a;
@@ -444,7 +449,7 @@ body {
 .input-print {
   padding: 10px 16px;
   font-size: 12px;
-  width: 100px;
+  width: 120px;
   border: none;
   border-radius: 4px;
   background-color: #ff004c;

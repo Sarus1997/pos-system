@@ -8,7 +8,7 @@
         </router-link>
       </li>
       <hr>
-      <li id="s-item" v-for="item in menuItems" :key="item.text" type="button">
+      <li id="s-item" class="btn" v-for="item in menuItems" :key="item.text" type="button">
         <router-link :to="item.link">
           <font-awesome-icon :icon="item.icon" />
           &nbsp; {{ item.text }}
@@ -112,6 +112,16 @@ export default {
 #s-item:hover {
   background-color: #89f5ea;
   color: #000;
+}
+
+.btn {
+  background-color: #363e46;
+  color: #fff;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .sidebar ul {
