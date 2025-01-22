@@ -66,6 +66,8 @@
 </template>
 
 <script>
+import { fetchReceipt } from '../api/api.js';
+
 export default {
   data() {
     return {
@@ -104,20 +106,7 @@ export default {
       }
       this.errorMessage = '';
       try {
-        const response = await fetch('http://localhost:4000/api2/get_receipt_2', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization:
-              'Token eyJhY2NvdW50IjoiQUNDT1VOVF9TWU5DOjE3MzExNDM4MTI4NTkuODk2MjAzIiwiaWQiOiJDVVNUT01FUjoxNzMwNjg1NTY0Mzg0LjMwMzAyMCIsImdyb3VwIjoidXNlcjpjdXN0b21lciIsIm9mZmljZV9pZCI6Ik9GRklDRTowMDEiLCJkYXRlIjoxNzMxNTYwMDg5Mzc0fQ==!IcYueH98Vx4wrffC57Xh39pLSYwu4SNW0WfTzQcs75M=',
-          },
-          body: JSON.stringify({ order_id: this.orderId }),
-        });
-        if (!response.ok) {
-          throw new Error(`HTTP Error: ${response.status}`);
-        }
-        const result = await response.json();
-        const receiptData = result.result?.data?.[0];
+        const receiptData = await fetchReceipt(this.orderId);
 
         if (!receiptData) {
           this.errorMessage = 'ไม่พบข้อมูลใบเสร็จ';
@@ -129,7 +118,6 @@ export default {
           products: receiptData.products || [],
         };
       } catch (error) {
-        console.error('Error:', error);
         this.errorMessage = 'เกิดข้อผิดพลาดในการดึงข้อมูล';
       }
     },
@@ -140,7 +128,6 @@ export default {
       }
 
       this.errorMessage = '';
-
       const printWindow = window.open('', '_blank');
       printWindow.document.write(`
         <html>
@@ -362,7 +349,7 @@ export default {
       printWindow.document.close();
       printWindow.print();
     },
-  }
+  },
 };
 </script>
 

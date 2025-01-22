@@ -26,7 +26,7 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue';
-import axios from 'axios';
+import { fetchProductList } from '../api/api';
 import ProductCard from '../components/ProductCardPage.vue';
 import CartTable from '../components/CartTablePage.vue';
 
@@ -80,16 +80,9 @@ const nextPage = () => {
 
 onMounted(async () => {
   try {
-    const response = await axios.post('http://localhost:4000/api2/product_list', {
-      filter: {},
-    }, {
-      headers: {
-        Authorization: 'Token eyJhY2NvdW50IjoiQUNDT1VOVF9TWU5DOjE3MzExNDM4MTI4NTkuODk2MjAzIiwiaWQiOiJDVVNUT01FUjoxNzMwNjg1NTY0Mzg0LjMwMzAyMCIsImdyb3VwIjoidXNlcjpjdXN0b21lciIsIm9mZmljZV9pZCI6Ik9GRklDRTowMDEiLCJkYXRlIjoxNzMxNTYwMDg5Mzc0fQ==!IcYueH98Vx4wrffC57Xh39pLSYwu4SNW0WfTzQcs75M=',
-      },
-    });
-    console.log('API response:', response.data);
-    if (response.data.details.status === 'success') {
-      products.value = response.data.result.data.map((item) => ({
+    const data = await fetchProductList();
+    if (data.details.status === 'success') {
+      products.value = data.result.data.map((item) => ({
         id: item.product_id,
         name: item.product_name,
         image: item.image_url,
@@ -98,12 +91,13 @@ onMounted(async () => {
         quantity: item.quantity,
       }));
     } else {
-      console.error('Error fetching data:', response.data.details.reason);
+      console.error('Error fetching data:', data.details.reason);
     }
   } catch (error) {
     console.error('API call failed:', error);
   }
 });
+
 </script>
 
 <style scoped>
