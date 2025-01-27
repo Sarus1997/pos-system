@@ -1,10 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import PosPage from '../pages/PosPage.vue';
 import EceiptPage from '../pages/EceiptPage.vue';
-import LogoutPage from '../pages/LogoutPage.vue';
 import LoginPage from '../pages/LoginPage.vue';
 import ReportsPage from '../pages/ReportsPage.vue';
 import SettingsPage from '../pages/SettingsPage.vue';
+import ProfilePage from "../pages/ProfilePage.vue";
 
 const routes = [
   {
@@ -28,6 +28,11 @@ const routes = [
     meta: { requiresAuth: true, roles: ['admin', 'manager', 'staff'] }
   },
   {
+    path: "/profile",
+    component: ProfilePage,
+    meta: { requiresAuth: true, roles: ['admin', 'manager', 'staff'] }
+  },
+  {
     path: "/settings",
     component: SettingsPage,
     meta: { requiresAuth: true, roles: ['admin', 'manager',] }
@@ -36,12 +41,8 @@ const routes = [
     path: '/login',
     name: 'Login',
     component: LoginPage,
-  },
-  {
-    path: '/logout',
-    name: 'Logout',
-    component: LogoutPage,
-  },
+    meta: { requiresAuth: false }
+  }
 ];
 
 const router = createRouter({
@@ -67,7 +68,6 @@ router.beforeEach((to, from, next) => {
     }
   }
 
-  // Allow navigation
   next();
 });
 

@@ -1,37 +1,27 @@
 <template>
-  <div class="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center p-4">
-    <div class="w-full max-w-md bg-white rounded-2xl shadow-xl p-8 space-y-6">
-      <div class="text-center">
-        <h1 class="text-3xl font-bold text-gray-800 mb-2">เข้าสู่ระบบ</h1>
-        <p class="text-gray-500">กรุณาเข้าสู่ระบบเพื่อดำเนินการต่อ</p>
+  <div class="login-container">
+    <div class="login-card">
+      <div class="login-header">
+        <h1>เข้าสู่ระบบ</h1>
+        <p>กรุณาเข้าสู่ระบบเพื่อดำเนินการต่อ</p>
       </div>
 
-      <form @submit.prevent="handleLogin" class="space-y-5">
-        <div v-if="errorMessage" class="text-red-500 text-sm">{{ errorMessage }}</div>
+      <form @submit.prevent="handleLogin" class="login-form">
+        <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
 
-        <div class="space-y-2">
-          <label for="username" class="block text-sm font-medium text-gray-700">
-            ชื่อผู้ใช้
-          </label>
-          <input id="username" type="text" v-model="username" required
-            class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200 ease-in-out text-gray-900 text-base"
-            placeholder="กรอกชื่อผู้ใช้ของคุณ" />
+        <div class="form-group">
+          <label for="username">ชื่อผู้ใช้</label>
+          <input id="username" type="text" v-model="username" required placeholder="กรอกชื่อผู้ใช้ของคุณ" />
         </div>
 
-        <div class="space-y-2">
-          <label for="password" class="block text-sm font-medium text-gray-700">
-            รหัสผ่าน
-          </label>
-          <input id="password" type="password" v-model="password" required
-            class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200 ease-in-out text-gray-900 text-base"
-            placeholder="กรอกรหัสผ่านของคุณ" />
+        <div class="form-group">
+          <label for="password">รหัสผ่าน</label>
+          <input id="password" type="password" v-model="password" required placeholder="กรอกรหัสผ่านของคุณ" />
         </div>
 
-        <button type="submit" :disabled="loading"
-          class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition duration-200 ease-in-out disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center space-x-2">
+        <button type="submit" :disabled="loading" class="login-button">
           <template v-if="loading">
-            <span
-              class="inline-block w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></span>
+            <span class="spinner"></span>
             <span>กำลังดำเนินการ...</span>
           </template>
           <template v-else>
@@ -47,29 +37,29 @@
 export default {
   data() {
     return {
-      username: "",
-      password: "",
+      username: '',
+      password: '',
       loading: false,
-      errorMessage: "",
+      errorMessage: '',
     };
   },
   methods: {
     async handleLogin() {
       this.loading = true;
-      this.errorMessage = "";
+      this.errorMessage = '';
 
       if (!this.username.trim() || !this.password.trim()) {
-        this.errorMessage = "กรุณากรอกข้อมูลให้ครบถ้วน";
+        this.errorMessage = 'กรุณากรอกข้อมูลให้ครบถ้วน';
         this.loading = false;
         return;
       }
 
       try {
-        const response = await fetch("http://localhost:4000/api2/pos_login", {
-          method: "POST",
+        const response = await fetch('http://localhost:4000/api2/pos_login', {
+          method: 'POST',
           headers: {
-            Authorization: "Token eyJhY2NvdW50IjoiQUNDT1VOVF9TWU5DOjE3MzExNDM4MTI4NTkuODk2MjAzIiwiaWQiOiJDVVNUT01FUjoxNzMwNjg1NTY0Mzg0LjMwMzAyMCIsImdyb3VwIjoidXNlcjpjdXN0b21lciIsIm9mZmljZV9pZCI6Ik9GRklDRTowMDEiLCJkYXRlIjoxNzMxNTYwMDg5Mzc0fQ==!IcYueH98Vx4wrffC57Xh39pLSYwu4SNW0WfTzQcs75M=",
-            "Content-Type": "application/json",
+            Authorization: 'Token eyJhY2NvdW50IjoiQUNDT1VOVF9TWU5DOjE3MzExNDM4MTI4NTkuODk2MjAzIiwiaWQiOiJDVVNUT01FUjoxNzMwNjg1NTY0Mzg0LjMwMzAyMCIsImdyb3VwIjoidXNlcjpjdXN0b21lciIsIm9mZmljZV9pZCI6Ik9GRklDRTowMDEiLCJkYXRlIjoxNzMxNTYwMDg5Mzc0fQ==!IcYueH98Vx4wrffC57Xh39pLSYwu4SNW0WfTzQcs75M=',
+            'Content-Type': 'application/json',
           },
           body: JSON.stringify({
             username: this.username,
@@ -77,156 +67,167 @@ export default {
           }),
         });
 
+        // ตรวจสอบสถานะ HTTP
         if (!response.ok) {
-          this.errorMessage = `Error: ${response.status} ${response.statusText}`;
-          return;
+          if (response.status === 401) {
+            this.errorMessage = 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง';
+          } else {
+            this.errorMessage = `ข้อผิดพลาดจากเซิร์ฟเวอร์: ${response.statusText}`;
+          }
+          throw new Error(`HTTP error! status: ${response.status}`);
         }
 
         const data = await response.json();
 
-        if (data.details.status === "success") {
-          localStorage.setItem("user", JSON.stringify({
-            username: data.result.data[0].username,
-            role: data.result.data[0].role,
-          }));
+        // ตรวจสอบโครงสร้างข้อมูลที่ได้รับ
+        if (data.details.status === 'success') {
+          localStorage.setItem(
+            'user',
+            JSON.stringify({
+              username: data.result.data[0].username,
+              role: data.result.data[0].role,
+            })
+          );
+          this.$emit('update:isLoggedIn', true); // แจ้ง SidebarPage ให้อัปเดตสถานะ
           alert(`เข้าสู่ระบบสำเร็จ! ตำแหน่ง: ${data.result.data[0].role}`);
           this.$router.push('/pos');
-        }
-        else {
-          this.errorMessage = "เข้าสู่ระบบไม่สำเร็จ: " + data.details.reason;
+        } else {
+          this.errorMessage = `เข้าสู่ระบบไม่สำเร็จ: ${data.details.reason}`;
         }
       } catch (error) {
-        this.errorMessage = "เกิดข้อผิดพลาด: " + error.message;
+        console.error('Error during login:', error);
+        if (!this.errorMessage) {
+          this.errorMessage = 'เกิดข้อผิดพลาด: ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์';
+        }
       } finally {
         this.loading = false;
       }
-    },
-  },
+    }
+  }
 };
 </script>
 
+
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap');
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Prompt', sans-serif;
-}
-
-.min-h-screen {
+.login-container {
   min-height: 80vh;
-}
-
-.flex {
   display: flex;
-}
-
-.items-center {
   align-items: center;
-}
-
-.justify-center {
   justify-content: center;
-}
-
-.p-4 {
   padding: 1rem;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
-.w-full {
+.login-card {
   width: 100%;
-}
-
-.max-w-md {
-  max-width: 28rem;
-}
-
-.bg-white {
-  background-color: white;
-}
-
-.rounded-2xl {
-  border-radius: 1rem;
-}
-
-.shadow-xl {
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-}
-
-.p-8 {
+  max-width: 400px;
+  background: white;
+  border-radius: 16px;
   padding: 2rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  animation: slideUp 0.5s ease-out;
 }
 
-.space-y-6>*+* {
-  margin-top: 1.5rem;
-}
-
-.space-y-5>*+* {
-  margin-top: 1.25rem;
-}
-
-.space-y-2>*+* {
-  margin-top: 0.5rem;
-}
-
-.text-center {
+.login-header {
   text-align: center;
+  margin-bottom: 2rem;
 }
 
-.text-3xl {
+.login-header h1 {
   font-size: 1.875rem;
-  line-height: 2.25rem;
-}
-
-.font-bold {
   font-weight: 700;
-}
-
-.text-gray-800 {
-  color: #1f2937;
-}
-
-.mb-2 {
+  color: #1e3a8a;
   margin-bottom: 0.5rem;
 }
 
-.text-gray-500 {
-  color: #6b7280;
+.login-header p {
+  color: #64748b;
+  font-size: 0.95rem;
 }
 
-input {
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #475569;
+}
+
+.form-group input {
   width: 100%;
   padding: 0.75rem 1rem;
-  border-radius: 0.5rem;
-  border: 1px solid #e5e7eb;
-  transition: all 0.2s;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 1rem;
+  color: #1e293b;
+  transition: all 0.3s ease;
 }
 
-input:focus {
+.form-group input:focus {
   outline: none;
   border-color: #3b82f6;
-  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
-button {
+.form-group input::placeholder {
+  color: #94a3b8;
+}
+
+.login-button {
   width: 100%;
-  background-color: #2563eb;
+  padding: 0.875rem;
+  background: #2563eb;
   color: white;
-  padding: 0.75rem 1rem;
-  border-radius: 0.5rem;
+  border: none;
+  border-radius: 8px;
   font-weight: 500;
-  transition: all 0.2s;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
 }
 
-button:hover:not(:disabled) {
-  background-color: #1d4ed8;
+.login-button:hover:not(:disabled) {
+  background: #1d4ed8;
+  transform: translateY(-1px);
 }
 
-button:disabled {
-  background-color: #9ca3af;
+.login-button:disabled {
+  background: #94a3b8;
   cursor: not-allowed;
+}
+
+.error-message {
+  padding: 0.75rem;
+  background: #fee2e2;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  color: #dc2626;
+  font-size: 0.875rem;
+  animation: shake 0.5s ease-in-out;
+}
+
+.spinner {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #ffffff;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
 }
 
 @keyframes spin {
@@ -235,7 +236,41 @@ button:disabled {
   }
 }
 
-.animate-spin {
-  animation: spin 1s linear infinite;
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shake {
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  25% {
+    transform: translateX(-5px);
+  }
+
+  75% {
+    transform: translateX(5px);
+  }
+}
+
+@media (max-width: 640px) {
+  .login-card {
+    padding: 1.5rem;
+  }
+
+  .login-header h1 {
+    font-size: 1.5rem;
+  }
 }
 </style>

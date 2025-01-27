@@ -8,7 +8,7 @@
         </router-link>
       </li>
       <hr>
-      <li id="s-item" class="btn" v-for="item in menuItems" :key="item.text" type="button">
+      <li id="s-item" class="btn" v-for="item in filteredMenuItems" :key="item.text" type="button">
         <router-link :to="item.link" @click="item.action && item.action()">
           <font-awesome-icon :icon="item.icon" />
           {{ item.text }}
@@ -22,7 +22,6 @@
     </div>
   </aside>
 </template>
-
 
 <script>
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -55,20 +54,34 @@ export default {
           icon: ['fas', 'file-invoice'],
         },
         {
+          text: 'โปรไฟล์',
+          link: '/profile',
+          icon: ['fas', 'cat'],
+        },
+        {
           text: 'ตั้งค่า',
           link: '/settings',
           icon: ['fas', 'cog'],
         },
-        {
-          text: 'ออกจากระบบ',
-          link: '/logout',
-          icon: ['fas', 'sign-out-alt'],
-        },
       ],
     }
+  },
+  computed: {
+    filteredMenuItems() {
+      if (this.$route.path === '/login') {
+        return [];
+      }
+      return this.isLoggedIn ? this.menuItems : this.menuItems.filter(item => item.text !== 'ออกจากระบบ');
+    }
+  },
+  mounted() {
+    const user = localStorage.getItem('user');
+    this.isLoggedIn = user ? true : false;
   }
 }
 </script>
+
+
 
 <style scoped>
 .sidebar {
