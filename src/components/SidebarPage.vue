@@ -4,14 +4,14 @@
       <li id="s-logo">
         <router-link to="/">
           <font-awesome-icon :icon="['fas', 'cat']" />
-          &nbsp; POS - แมวขาว
+          POS - แมวขาว
         </router-link>
       </li>
       <hr>
       <li id="s-item" class="btn" v-for="item in menuItems" :key="item.text" type="button">
-        <router-link :to="item.link">
+        <router-link :to="item.link" @click="item.action && item.action()">
           <font-awesome-icon :icon="item.icon" />
-          &nbsp; {{ item.text }}
+          {{ item.text }}
         </router-link>
       </li>
     </ul>
@@ -22,6 +22,7 @@
     </div>
   </aside>
 </template>
+
 
 <script>
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -59,29 +60,15 @@ export default {
           icon: ['fas', 'cog'],
         },
         {
-          text: this.isLoggedIn ? 'ออกจากระบบ' : 'เข้าสู่ระบบ',
-          link: this.isLoggedIn ? '/logout' : '/login',
-          icon: this.isLoggedIn ? ['fas', 'sign-out-alt'] : ['fas', 'sign-in-alt'],
+          text: 'ออกจากระบบ',
+          link: '/logout',
+          icon: ['fas', 'sign-out-alt'],
         },
       ],
     }
-  },
-  watch: {
-    isLoggedIn(newStatus) {
-      this.updateMenuItems(newStatus);
-    },
-  },
-  methods: {
-    updateMenuItems(isLoggedIn) {
-      this.menuItems[this.menuItems.length - 1].text = isLoggedIn ? 'Logout' : 'Login';
-      this.menuItems[this.menuItems.length - 1].link = isLoggedIn ? '/logout' : '/login';
-      this.menuItems[this.menuItems.length - 1].icon = isLoggedIn ? ['fas', 'sign-out-alt'] : ['fas', 'sign-in-alt'];
-    },
-  },
+  }
 }
 </script>
-
-
 
 <style scoped>
 .sidebar {
