@@ -7,7 +7,6 @@
 <style scoped>
 .header {
   background-size: 300% 300%;
-  padding: 1rem;
   border-bottom: 1px solid #ddd;
   text-align: center;
   font-size: 1.5rem;
@@ -16,10 +15,10 @@
 
 .rgb-text {
   background: linear-gradient(90deg,
-      rgb(255, 0, 0),
-      rgb(0, 255, 0),
-      rgb(0, 0, 255),
-      rgb(255, 0, 0));
+      rgba(255, 0, 0, 0.5),
+      rgba(0, 255, 0, 0.5),
+      rgba(0, 0, 255, 0.5),
+      rgba(255, 0, 0, 0.5));
   background-size: 300% 300%;
   -webkit-background-clip: text;
   background-clip: text;

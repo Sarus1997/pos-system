@@ -1,7 +1,7 @@
 <template>
   <div class="product-card">
     <div class="product-image-wrapper">
-      <img :src="product.image" alt="product.name" class="product-image" />
+      <img :src="product.image" :alt="product.name" class="product-image" />
     </div>
     <div class="product-info">
       <p class="product-name">{{ product.name }}</p>
@@ -25,20 +25,19 @@ defineProps(['product']);
   flex-direction: column;
   align-items: center;
   padding: 1.5rem;
-  margin-top: 10px;
-  margin-left: 1rem;
-  border: 1px solid #e0e0e0;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  background-color: #f7f9fc;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  width: 100%;
+  border-radius: 15px;
+  background: linear-gradient(145deg, #ffffff, #f0f4f8);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  transition: all 0.4s ease;
   max-width: 300px;
+  width: 100%;
+  cursor: pointer;
+  overflow: hidden;
 }
 
 .product-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
 }
 
 .product-image-wrapper {
@@ -46,103 +45,121 @@ defineProps(['product']);
   height: 200px;
   border-radius: 10px;
   overflow: hidden;
-  margin-bottom: 1.5rem;
-  transition: transform 0.3s ease;
-}
-
-.product-image-wrapper:hover {
-  transform: scale(1.05);
+  margin-bottom: 1rem;
 }
 
 .product-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.product-card:hover .product-image {
+  transform: scale(1.1);
 }
 
 .product-info {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  text-align: center;
+  width: 100%;
 }
 
 .product-name {
-  font-size: 1rem;
-  font-weight: 600;
-  color: #333;
-  margin-bottom: 0.75rem;
-  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
+  transition: color 0.3s ease;
+}
+
+.product-card:hover .product-name {
+  color: #27ae60;
 }
 
 .product-price {
-  font-size: 1.25rem;
-  color: #48bb78;
-  margin-bottom: 1.5rem;
-  font-weight: 500;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #27ae60;
+  margin-bottom: 0.5rem;
 }
 
 .product-quantity {
-  font-size: 1rem;
-  font-weight: 600;
-  color: #333;
-  margin-bottom: 0.75rem;
-  text-align: center;
+  font-size: 0.9rem;
+  color: #7f8c8d;
+  font-weight: 500;
+  margin-bottom: 1rem;
 }
 
 .add-to-cart {
-  background-color: #48bb78;
+  background: #27ae60;
   color: white;
   border: none;
-  padding: 0.75rem 1.5rem;
+  padding: 0.8rem 1.5rem;
   border-radius: 30px;
   font-size: 1rem;
   font-weight: bold;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  transition: all 0.3s ease;
+  width: 80%;
+  justify-content: center;
 }
 
 .add-to-cart:hover {
-  background-color: #218838;
+  background: #219150;
   transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(33, 145, 80, 0.3);
 }
 
 .add-to-cart:active {
   transform: translateY(0);
 }
 
-@media (max-width: 1920px) {
+@media (max-width: 1080px) {
   .product-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 10px;
-    border: 1px solid #e0e0e0;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    background-color: #f7f9fc;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    max-width: 230px;
+    max-width: 90%;
+    padding: 1.2rem;
   }
 
   .product-image-wrapper {
-    height: 170px;
+    height: 180px;
   }
 
   .product-name {
-    font-size: 13px;
+    font-size: 1.1rem;
   }
 
   .product-price {
-    font-size: 10px;
+    font-size: 1rem;
+  }
+
+  .add-to-cart {
+    font-size: 0.95rem;
+    padding: 0.75rem 1.4rem;
+    width: 85%;
+  }
+}
+
+@media (max-width: 768px) {
+  .product-card {
+    max-width: 100%;
+    padding: 1rem;
+  }
+
+  .product-name {
+    font-size: 1.1rem;
+  }
+
+  .product-price {
+    font-size: 1rem;
   }
 
   .add-to-cart {
     font-size: 0.9rem;
-    padding: 0.5rem 1rem;
-    font-size: 12px;
+    padding: 0.7rem 1.3rem;
+    width: 90%;
   }
 }
 </style>

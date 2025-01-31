@@ -371,7 +371,6 @@ body {
   margin: 0;
   padding: 20px;
   box-sizing: border-box;
-  background-color: #f0f0f0;
   color: #333;
 }
 
