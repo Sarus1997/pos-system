@@ -101,6 +101,7 @@ tr:nth-child(even) {
     padding: 0;
     background-color: transparent;
     box-shadow: none;
+    border-radius: 0;
   }
 
   .export-btn {

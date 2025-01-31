@@ -31,7 +31,7 @@
   </aside>
 </template>
 
-<script>
+<script setup>
 import { ref, computed, onMounted } from 'vue'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -57,72 +57,67 @@ library.add(
   faBars
 )
 
-export default {
-  name: 'SidebarComponent',
-  components: {
-    FontAwesomeIcon,
+const isLoggedIn = ref(false)
+const isCollapsed = ref(false)
+
+const menuItems = [
+  {
+    text: 'รายงาน',
+    link: '/reports',
+    icon: ['fas', 'chart-line'],
   },
-  setup() {
-    const isLoggedIn = ref(false)
-    const isCollapsed = ref(false)
+  {
+    text: 'POS',
+    link: '/pos',
+    icon: ['fas', 'cash-register'],
+  },
+  {
+    text: 'ใบเสร็จ',
+    link: '/eceipt',
+    icon: ['fas', 'file-invoice'],
+  },
+  {
+    text: 'โปรไฟล์',
+    link: '/profile',
+    icon: ['fas', 'cat'],
+  },
+  {
+    text: 'ตั้งค่า',
+    link: '/settings',
+    icon: ['fas', 'cog'],
+  },
+]
 
-    const menuItems = [
-      {
-        text: 'รายงาน',
-        link: '/reports',
-        icon: ['fas', 'chart-line'],
-      },
-      {
-        text: 'POS',
-        link: '/pos',
-        icon: ['fas', 'cash-register'],
-      },
-      {
-        text: 'ใบเสร็จ',
-        link: '/eceipt',
-        icon: ['fas', 'file-invoice'],
-      },
-      {
-        text: 'โปรไฟล์',
-        link: '/profile',
-        icon: ['fas', 'cat'],
-      },
-      {
-        text: 'ตั้งค่า',
-        link: '/settings',
-        icon: ['fas', 'cog'],
-      },
-    ]
-
-    const filteredMenuItems = computed(() => {
-      if (isCollapsed.value) {
-        return menuItems.map(item => ({
-          ...item,
-          text: ''
-        }))
-      }
-      return menuItems
-    })
-
-    const toggleSidebar = () => {
-      isCollapsed.value = !isCollapsed.value
-    }
-
-    onMounted(() => {
-      const user = localStorage.getItem('user')
-      isLoggedIn.value = !!user
-    })
-
-    return {
-      isLoggedIn,
-      isCollapsed,
-      menuItems,
-      filteredMenuItems,
-      toggleSidebar
-    }
+const filteredMenuItems = computed(() => {
+  if (isCollapsed.value) {
+    return menuItems.map(item => ({
+      ...item,
+      text: ''
+    }))
   }
+  return menuItems
+})
+
+const toggleSidebar = () => {
+  isCollapsed.value = !isCollapsed.value
 }
+
+onMounted(() => {
+  const user = localStorage.getItem('user')
+  isLoggedIn.value = !!user
+})
+
+import { defineExpose } from 'vue'
+
+defineExpose({
+  isLoggedIn,
+  isCollapsed,
+  menuItems,
+  filteredMenuItems,
+  toggleSidebar
+})
 </script>
+
 
 <style scoped>
 .sidebar {

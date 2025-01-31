@@ -33,78 +33,75 @@
   </div>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      username: '',
-      password: '',
-      loading: false,
-      errorMessage: '',
-    };
-  },
-  methods: {
-    async handleLogin() {
-      this.loading = true;
-      this.errorMessage = '';
+<script setup>
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 
-      if (!this.username.trim() || !this.password.trim()) {
-        this.errorMessage = 'กรุณากรอกข้อมูลให้ครบถ้วน';
-        this.loading = false;
-        return;
-      }
+const username = ref('')
+const password = ref('')
+const loading = ref(false)
+const errorMessage = ref('')
 
-      try {
-        const response = await fetch('http://localhost:4000/api2/pos_login', {
-          method: 'POST',
-          headers: {
-            Authorization: 'Token eyJhY2NvdW50IjoiQUNDT1VOVF9TWU5DOjE3MzExNDM4MTI4NTkuODk2MjAzIiwiaWQiOiJDVVNUT01FUjoxNzMwNjg1NTY0Mzg0LjMwMzAyMCIsImdyb3VwIjoidXNlcjpjdXN0b21lciIsIm9mZmljZV9pZCI6Ik9GRklDRTowMDEiLCJkYXRlIjoxNzMxNTYwMDg5Mzc0fQ==!IcYueH98Vx4wrffC57Xh39pLSYwu4SNW0WfTzQcs75M=',
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            username: this.username,
-            password: this.password,
-          }),
-        });
+const router = useRouter()
 
-        // ตรวจสอบสถานะ HTTP
-        if (!response.ok) {
-          if (response.status === 401) {
-            this.errorMessage = 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง';
-          } else {
-            this.errorMessage = `ข้อผิดพลาดจากเซิร์ฟเวอร์: ${response.statusText}`;
-          }
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
+async function handleLogin() {
+  loading.value = true
+  errorMessage.value = ''
 
-        const data = await response.json();
-
-        // ตรวจสอบโครงสร้างข้อมูลที่ได้รับ
-        if (data.details.status === 'success') {
-          localStorage.setItem(
-            'user',
-            JSON.stringify({
-              username: data.result.data[0].username,
-              role: data.result.data[0].role,
-            })
-          );
-          this.$emit('update:isLoggedIn', true); // แจ้ง SidebarPage ให้อัปเดตสถานะ
-          alert(`เข้าสู่ระบบสำเร็จ! ตำแหน่ง: ${data.result.data[0].role}`);
-          this.$router.push('/pos');
-        } else {
-          this.errorMessage = `เข้าสู่ระบบไม่สำเร็จ: ${data.details.reason}`;
-        }
-      } catch (error) {
-        console.error('Error during login:', error);
-        if (!this.errorMessage) {
-          this.errorMessage = 'เกิดข้อผิดพลาด: ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์';
-        }
-      } finally {
-        this.loading = false;
-      }
-    }
+  if (!username.value.trim() || !password.value.trim()) {
+    errorMessage.value = 'กรุณากรอกข้อมูลให้ครบถ้วน'
+    loading.value = false
+    return
   }
-};
+
+  try {
+    const response = await fetch('http://localhost:4000/api2/pos_login', {
+      method: 'POST',
+      headers: {
+        Authorization: 'Token eyJhY2NvdW50IjoiQUNDT1VOVF9TWU5DOjE3MzExNDM4MTI4NTkuODk2MjAzIiwiaWQiOiJDVVNUT01FUjoxNzMwNjg1NTY0Mzg0LjMwMzAyMCIsImdyb3VwIjoidXNlcjpjdXN0b21lciIsIm9mZmljZV9pZCI6Ik9GRklDRTowMDEiLCJkYXRlIjoxNzMxNTYwMDg5Mzc0fQ==!IcYueH98Vx4wrffC57Xh39pLSYwu4SNW0WfTzQcs75M=',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        username: username.value,
+        password: password.value,
+      }),
+    })
+
+    // ตรวจสอบสถานะ HTTP
+    if (!response.ok) {
+      if (response.status === 401) {
+        errorMessage.value = 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง'
+      } else {
+        errorMessage.value = `ข้อผิดพลาดจากเซิร์ฟเวอร์: ${response.statusText}`
+      }
+      throw new Error(`HTTP error! status: ${response.status}`)
+    }
+
+    const data = await response.json()
+
+    // ตรวจสอบโครงสร้างข้อมูลที่ได้รับ
+    if (data.details.status === 'success') {
+      localStorage.setItem(
+        'user',
+        JSON.stringify({
+          username: data.result.data[0].username,
+          role: data.result.data[0].role,
+        })
+      )
+      router.push('/pos')
+      alert(`เข้าสู่ระบบสำเร็จ! ตำแหน่ง: ${data.result.data[0].role}`)
+    } else {
+      errorMessage.value = `เข้าสู่ระบบไม่สำเร็จ: ${data.details.reason}`
+    }
+  } catch (error) {
+    console.error('Error during login:', error)
+    if (!errorMessage.value) {
+      errorMessage.value = 'เกิดข้อผิดพลาด: ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์'
+    }
+  } finally {
+    loading.value = false
+  }
+}
 </script>
 
 

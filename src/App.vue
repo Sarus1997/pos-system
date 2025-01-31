@@ -10,13 +10,9 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import Sidebar from './components/SidebarPage.vue';
 import AppHeader from './components/HeaderPage.vue';
-
-export default {
-  components: { Sidebar, AppHeader }
-};
 </script>
 
 <style scoped>
