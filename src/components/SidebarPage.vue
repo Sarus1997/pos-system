@@ -125,14 +125,14 @@ defineExpose({
   background-color: #1f2937;
   height: 100vh;
   width: 280px;
-  transition: all 0.3s ease;
+  transition: all 0.50s cubic-bezier(0.5, 0, 0.5, 1);
   display: flex;
   flex-direction: column;
   box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .sidebar-collapsed {
-  width: 80px;
+  width: 85px;
 }
 
 .sidebar-header {
