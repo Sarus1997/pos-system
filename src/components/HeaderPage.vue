@@ -4,6 +4,10 @@
   </header>
 </template>
 
+<script setup>
+
+</script>
+
 <style scoped>
 .header {
   background-size: 300% 300%;
