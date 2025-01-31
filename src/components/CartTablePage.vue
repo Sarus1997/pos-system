@@ -67,12 +67,16 @@
 <script setup>
 import { computed } from 'vue'
 
+import { defineProps } from 'vue'
+
 const props = defineProps({
   cart: {
     type: Array,
     required: true,
   }
 })
+
+import { defineEmits } from 'vue'
 
 const emit = defineEmits(['update-cart', 'remove-item', 'complete-sale'])
 
