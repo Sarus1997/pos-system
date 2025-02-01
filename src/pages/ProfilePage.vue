@@ -3,34 +3,134 @@
     <div class="card">
       <div class="header">
         <h1 class="title">ข้อมูลผู้ใช้</h1>
+        <p class="subtitle">จัดการข้อมูลส่วนตัวของคุณ</p>
       </div>
 
-      <div class="form-group">
-        <label for="username" class="label">ชื่อผู้ใช้</label>
-        <input id="username" type="text" v-model="username" :readonly="!isEditing" class="input"
-          placeholder="กรอกชื่อผู้ใช้ของคุณ" />
+      <div class="profile-section">
+        <div class="avatar-container">
+          <img :src="avatar || '/api/placeholder/120/120'" class="avatar" :class="{ 'avatar-disabled': !isEditing }" />
+          <div v-if="isEditing" class="avatar-overlay">
+            <label for="avatar" class="avatar-upload">
+              <svg xmlns="http://www.w3.org/2000/svg" class="upload-icon" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+              <span>อัพโหลดรูป</span>
+            </label>
+            <input id="avatar" type="text" v-model="avatar" class="input avatar-input" placeholder="URL รูปโปรไฟล์" />
+          </div>
+        </div>
       </div>
 
-      <div class="form-group">
-        <label for="password" class="label">รหัสผ่าน</label>
-        <input id="password" type="text" v-model="password" :readonly="!isEditing" class="input"
-          placeholder="กรอกรหัสผ่านของคุณ" />
-      </div>
+      <div class="form-sections">
+        <div class="section">
+          <h2 class="section-title">ข้อมูลบัญชี</h2>
+          <div class="form-group">
+            <label for="username" class="label">ชื่อผู้ใช้</label>
+            <div class="input-group">
+              <span class="input-icon">@</span>
+              <input id="username" type="text" v-model="username" :readonly="!isEditing" class="input with-icon"
+                placeholder="กรอกชื่อผู้ใช้ของคุณ" />
+            </div>
+          </div>
 
-      <div class="form-group">
-        <label for="role" class="label">ตำแหน่ง</label>
-        <input id="role" type="text" v-model="role" :readonly="!isEditing" class="input"
-          placeholder="กรอกตำแหน่งของคุณ" />
+          <div class="form-group">
+            <label for="password" class="label">รหัสผ่าน</label>
+            <div class="input-group">
+              <span class="input-icon">🔒</span>
+              <input id="password" type="password" v-model="password" :readonly="!isEditing" class="input with-icon"
+                placeholder="กรอกรหัสผ่านของคุณ" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="email" class="label">อีเมล</label>
+            <div class="input-group">
+              <span class="input-icon">✉️</span>
+              <input id="email" type="email" v-model="email" :readonly="!isEditing" class="input with-icon"
+                placeholder="example@email.com" />
+            </div>
+          </div>
+        </div>
+
+        <div class="section">
+          <h2 class="section-title">ข้อมูลส่วนตัว</h2>
+          <div class="form-row">
+            <div class="form-group half">
+              <label for="first_name" class="label">ชื่อจริง</label>
+              <input id="first_name" type="text" v-model="first_name" :readonly="!isEditing" class="input"
+                placeholder="ชื่อจริง" />
+            </div>
+            <div class="form-group half">
+              <label for="last_name" class="label">นามสกุล</label>
+              <input id="last_name" type="text" v-model="last_name" :readonly="!isEditing" class="input"
+                placeholder="นามสกุล" />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group half">
+              <label for="date_of_birth" class="label">วันเกิด</label>
+              <input id="date_of_birth" type="text" v-model="date_of_birth" :readonly="!isEditing" class="input" />
+            </div>
+            <div class="form-group half">
+              <label for="phone_number" class="label">เบอร์โทรศัพท์</label>
+              <input id="phone_number" type="tel" v-model="phone_number" :readonly="!isEditing" class="input"
+                placeholder="0XX-XXX-XXXX" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="address" class="label">ที่อยู่</label>
+            <textarea id="address" v-model="address" :readonly="!isEditing" class="input"
+              placeholder="กรอกที่อยู่ของคุณ"></textarea>
+          </div>
+        </div>
+
+        <div class="section">
+          <h2 class="section-title">ข้อมูลการทำงาน</h2>
+          <div class="form-group">
+            <label for="position" class="label">ตำแหน่งงาน</label>
+            <input id="position" type="text" v-model="position" :readonly="!isEditing" class="input"
+              placeholder="ตำแหน่งงานปัจจุบัน" />
+          </div>
+
+          <div class="form-group">
+            <label for="role" class="label">บทบาท</label>
+            <select id="role" v-model="role" :disabled="!isEditing" class="input">
+              <option value="">เลือกบทบาท</option>
+              <option value="admin">ผู้ดูแลระบบ</option>
+              <option value="user">ผู้ใช้งานทั่วไป</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="bio" class="label">เกี่ยวกับตัวคุณ</label>
+            <textarea id="bio" v-model="bio" :readonly="!isEditing" class="input textarea-bio"
+              placeholder="เล่าเกี่ยวกับตัวคุณสักหน่อย..."></textarea>
+          </div>
+        </div>
       </div>
 
       <div class="buttons">
         <button v-if="!isEditing" @click="enableEdit" class="btn btn-primary">
+          <span class="btn-icon">✏️</span>
           แก้ไขข้อมูล
         </button>
-        <button v-if="isEditing" @click="saveChanges" class="btn btn-primary">
-          บันทึกข้อมูล
+        <template v-else>
+          <button @click="saveChanges" class="btn btn-primary">
+            <span class="btn-icon">💾</span>
+            บันทึกข้อมูล
+          </button>
+          <button @click="isEditing = false" class="btn btn-secondary">
+            ยกเลิก
+          </button>
+        </template>
+        <button @click="handleLogout" class="btn btn-danger">
+          <span class="btn-icon">🚪</span>
+          ออกจากระบบ
         </button>
-        <button @click="handleLogout" class="btn btn-secondary">ออกจากระบบ</button>
       </div>
     </div>
   </div>
@@ -44,6 +144,15 @@ const router = useRouter();
 const username = ref("");
 const password = ref("");
 const role = ref("");
+const first_name = ref("");
+const last_name = ref("");
+const bio = ref("");
+const date_of_birth = ref("");
+const avatar = ref("");
+const email = ref("");
+const phone_number = ref("");
+const address = ref("");
+const position = ref("");
 const isEditing = ref(false);
 const userId = ref("");
 
@@ -59,8 +168,17 @@ const saveChanges = async () => {
       body: JSON.stringify({
         user_id: userId.value,
         username: username.value,
-        role: role.value,
         password: password.value,
+        role: role.value,
+        first_name: first_name.value,
+        last_name: last_name.value,
+        bio: bio.value,
+        date_of_birth: date_of_birth.value,
+        avatar: avatar.value,
+        email: email.value,
+        phone_number: phone_number.value,
+        address: address.value,
+        position: position.value,
       }),
     });
 
@@ -86,65 +204,81 @@ const handleLogout = () => {
 onMounted(() => {
   const user = JSON.parse(localStorage.getItem("user"));
   if (user) {
-    userId.value = user.user_id || ""; // กำหนด user_id
+    userId.value = user.user_id || "";
     username.value = user.username;
     role.value = user.role;
+    first_name.value = user.first_name;
+    last_name.value = user.last_name;
+    bio.value = user.bio;
+    date_of_birth.value = user.date_of_birth;
+    avatar.value = user.avatar;
+    email.value = user.email;
+    phone_number.value = user.phone_number;
+    address.value = user.address;
+    position.value = user.position;
   }
 });
 </script>
 
 <style scoped>
 .container {
-  min-height: 80vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 16px;
+  padding: 32px;
+  background-color: #f0f4f8;
+  font-family: "Arial", sans-serif;
+  color: #1e293b;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: 0.025em;
+  text-rendering: optimizeLegibility;
 }
 
 .card {
   width: 100%;
-  max-width: 500px;
+  max-width: 800px;
   background: white;
-  border-radius: 16px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-  padding: 24px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  padding: 40px;
   text-align: center;
 }
 
 .header {
-  margin-bottom: 24px;
+  margin-bottom: 32px;
 }
 
 .title {
-  font-size: 24px;
+  font-size: 32px;
   font-weight: bold;
   color: #1e293b;
-  margin-bottom: 8px;
+  margin-bottom: 16px;
 }
 
 .form-group {
-  margin-bottom: 16px;
+  margin-bottom: 24px;
   text-align: left;
 }
 
 .label {
   display: block;
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 16px;
+  font-weight: 600;
   color: #475569;
   margin-bottom: 8px;
 }
 
 .input {
   width: 100%;
-  padding: 12px;
-  border: 1px solid #cbd5e1;
-  border-radius: 8px;
+  padding: 14px;
+  border: 2px solid #e2e8f0;
+  border-radius: 10px;
   font-size: 16px;
   color: #1e293b;
   outline: none;
-  transition: border-color 0.3s;
+  transition: all 0.3s ease;
 }
 
 .input:focus {
@@ -155,17 +289,18 @@ onMounted(() => {
 .buttons {
   display: flex;
   justify-content: space-between;
-  gap: 8px;
+  gap: 16px;
+  margin-top: 32px;
 }
 
 .btn {
   flex: 1;
-  padding: 12px;
-  font-size: 14px;
+  padding: 14px;
+  font-size: 16px;
   font-weight: 600;
-  border-radius: 8px;
+  border-radius: 10px;
   cursor: pointer;
-  transition: background-color 0.3s, transform 0.2s;
+  transition: all 0.3s ease;
 }
 
 .btn-primary {
@@ -176,6 +311,8 @@ onMounted(() => {
 
 .btn-primary:hover {
   background-color: #2563eb;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .btn-secondary {
@@ -186,9 +323,158 @@ onMounted(() => {
 
 .btn-secondary:hover {
   background-color: #cbd5e1;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .btn:active {
-  transform: scale(0.98);
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 16px;
+}
+
+.subtitle {
+  color: #64748b;
+  margin-top: -8px;
+  margin-bottom: 24px;
+}
+
+.profile-section {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 40px;
+}
+
+.avatar-container {
+  position: relative;
+  width: 120px;
+  height: 120px;
+}
+
+.avatar-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  cursor: pointer;
+}
+
+.avatar-container:hover .avatar-overlay {
+  opacity: 1;
+}
+
+.avatar-upload {
+  color: white;
+  text-align: center;
+  cursor: pointer;
+}
+
+.upload-icon {
+  width: 24px;
+  height: 24px;
+  margin-bottom: 4px;
+}
+
+.avatar-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+.section {
+  background: #f8fafc;
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+.section-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 20px;
+}
+
+.form-row {
+  display: flex;
+  gap: 16px;
+}
+
+.half {
+  flex: 1;
+}
+
+.input-group {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon {
+  position: absolute;
+  left: 14px;
+  color: #64748b;
+}
+
+.input.with-icon {
+  padding-left: 40px;
+}
+
+.textarea-bio {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.btn-icon {
+  margin-right: 8px;
+}
+
+.btn-danger {
+  background-color: #ef4444;
+  color: white;
+  border: none;
+}
+
+.btn-danger:hover {
+  background-color: #dc2626;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .form-row {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .card {
+    padding: 24px;
+  }
+
+  .section {
+    padding: 16px;
+  }
 }
 </style>

@@ -43,7 +43,6 @@ const loading = ref(false)
 const errorMessage = ref('')
 
 const router = useRouter()
-
 async function handleLogin() {
   loading.value = true
   errorMessage.value = ''
@@ -79,13 +78,21 @@ async function handleLogin() {
 
     const data = await response.json()
 
-    // ตรวจสอบโครงสร้างข้อมูลที่ได้รับ
     if (data.details.status === 'success') {
       localStorage.setItem(
         'user',
         JSON.stringify({
           username: data.result.data[0].username,
           role: data.result.data[0].role,
+          first_name: data.result.data[0].first_name,
+          last_name: data.result.data[0].last_name,
+          bio: data.result.data[0].bio,
+          date_of_birth: data.result.data[0].date_of_birth,
+          avatar: data.result.data[0].avatar,
+          email: data.result.data[0].email,
+          phone_number: data.result.data[0].phone_number,
+          address: data.result.data[0].address,
+          position: data.result.data[0].position,
         })
       )
       router.push('/pos')
@@ -259,6 +266,77 @@ async function handleLogin() {
   75% {
     transform: translateX(5px);
   }
+}
+
+/* Existing styles remain the same */
+.login-container {
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  position: relative;
+}
+
+/* Add new styles for success states and notifications */
+.button-success {
+  background: #22c55e !important;
+  transform: scale(1.05);
+  transition: all 0.3s ease;
+}
+
+.success-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  margin-right: 0.5rem;
+}
+
+.success-notification {
+  position: fixed;
+  top: 2rem;
+  right: 2rem;
+  background: white;
+  border-radius: 12px;
+  padding: 1rem 1.5rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.notification-content {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.notification-text h3 {
+  color: #22c55e;
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.notification-text p {
+  margin: 0.25rem 0 0;
+  color: #64748b;
+  font-size: 0.9rem;
+}
+
+/* Notification animations */
+.notification-enter-active,
+.notification-leave-active {
+  transition: all 0.5s ease;
+}
+
+.notification-enter-from {
+  opacity: 0;
+  transform: translateX(30px);
+}
+
+.notification-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
 }
 
 @media (max-width: 640px) {

@@ -3,7 +3,7 @@
     <div class="sidebar-header">
       <router-link to="/" class="logo-link">
         <font-awesome-icon :icon="['fas', 'cat']" class="logo-icon" />
-        <span class="logo-text">POS - แมวขาว</span>
+        <span class="logo-text">POS</span>
       </router-link>
       <button @click="toggleSidebar" class="collapse-btn">
         <font-awesome-icon :icon="['fas', 'bars']" />
@@ -35,31 +35,11 @@
 import { ref, computed, onMounted } from 'vue'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import {
-  faCat,
-  faCashRegister,
-  faChartLine,
-  faCog,
-  faSignOutAlt,
-  faSignInAlt,
-  faFileInvoice,
-  faBars
-} from '@fortawesome/free-solid-svg-icons'
-
-library.add(
-  faCat,
-  faCashRegister,
-  faChartLine,
-  faCog,
-  faSignOutAlt,
-  faSignInAlt,
-  faFileInvoice,
-  faBars
-)
+import { faCat, faCashRegister, faChartLine, faCog, faUser, faSignOutAlt, faSignInAlt, faFileInvoice, faBars } from '@fortawesome/free-solid-svg-icons'
+library.add(faCat, faCashRegister, faChartLine, faCog, faUser, faSignOutAlt, faSignInAlt, faFileInvoice, faBars)
 
 const isLoggedIn = ref(false)
 const isCollapsed = ref(false)
-
 const menuItems = [
   {
     text: 'รายงาน',
@@ -79,7 +59,7 @@ const menuItems = [
   {
     text: 'โปรไฟล์',
     link: '/profile',
-    icon: ['fas', 'cat'],
+    icon: ['fas', 'user'],
   },
   {
     text: 'ตั้งค่า',
@@ -171,10 +151,6 @@ defineExpose({
   transition: color 0.2s ease;
 }
 
-.collapse-btn:hover {
-  color: #89f5ea;
-}
-
 .divider {
   height: 1px;
   background-color: #374151;
@@ -189,6 +165,8 @@ defineExpose({
 
 .nav-item-wrapper {
   margin: 0.5rem 0;
+  background-color: #8ea1ff45;
+  border-radius: 0.5rem;
 }
 
 .nav-item {
