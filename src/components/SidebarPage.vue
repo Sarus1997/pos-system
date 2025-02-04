@@ -33,56 +33,61 @@
 
     <footer class="sidebar-footer">
       <p>© {{ new Date().getFullYear() }} POS System</p>
-      <p>บริษัท แมวขาว อินเตอร์เทค จำกัด (มหาชน)</p>
+      <p>{{ $t('footer_company') }}</p>
     </footer>
   </aside>
 </template>
 
 <script setup>
 import { ref, computed, onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faCat, faCashRegister, faChartLine, faCog, faUser, faSignOutAlt, faSignInAlt, faFileInvoice, faBars } from '@fortawesome/free-solid-svg-icons'
+
 library.add(faCat, faCashRegister, faChartLine, faCog, faUser, faSignOutAlt, faSignInAlt, faFileInvoice, faBars)
+
+const { t } = useI18n() // ✅ ใช้ useI18n เพื่อเข้าถึง `t`  = translate
 
 const isLoggedIn = ref(false)
 const isCollapsed = ref(false)
-const menuItems = [
+
+const menuItems = computed(() => [
   {
-    text: 'รายงาน',
+    text: t('report'),
     link: '/reports',
     icon: ['fas', 'chart-line'],
   },
   {
-    text: 'POS',
+    text: t('menu_pos'),
     link: '/pos',
     icon: ['fas', 'cash-register'],
   },
   {
-    text: 'ใบเสร็จ',
-    link: '/eceipt',
+    text: t('receipt'),
+    link: '/receipt',
     icon: ['fas', 'file-invoice'],
   },
   {
-    text: 'โปรไฟล์',
+    text: t('profile'),
     link: '/profile',
     icon: ['fas', 'user'],
   },
   {
-    text: 'ตั้งค่า',
+    text: t('settings'),
     link: '/settings',
     icon: ['fas', 'cog'],
   },
-]
+])
 
 const filteredMenuItems = computed(() => {
   if (isCollapsed.value) {
-    return menuItems.map(item => ({
+    return menuItems.value.map(item => ({
       ...item,
       text: ''
     }))
   }
-  return menuItems
+  return menuItems.value
 })
 
 const toggleSidebar = () => {
@@ -104,6 +109,8 @@ defineExpose({
   toggleSidebar
 })
 </script>
+
+
 
 
 <style scoped>

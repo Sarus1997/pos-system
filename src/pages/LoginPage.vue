@@ -2,30 +2,30 @@
   <div class="login-container">
     <div class="login-card">
       <div class="login-header">
-        <h1>เข้าสู่ระบบ</h1>
-        <p>กรุณาเข้าสู่ระบบเพื่อดำเนินการต่อ</p>
+        <h1>{{ $t('login_title') }}</h1>
+        <p>{{ $t('login_subtitle') }}</p>
       </div>
 
       <form @submit.prevent="handleLogin" class="login-form">
         <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
 
         <div class="form-group">
-          <label for="username">ชื่อผู้ใช้</label>
-          <input id="username" type="text" v-model="username" required placeholder="กรอกชื่อผู้ใช้ของคุณ" />
+          <label for="username">{{ $t('login_username') }}</label>
+          <input id="username" type="text" v-model="username" required placeholder=" " />
         </div>
 
         <div class="form-group">
-          <label for="password">รหัสผ่าน</label>
-          <input id="password" type="password" v-model="password" required placeholder="กรอกรหัสผ่านของคุณ" />
+          <label for="password">{{ $t('login_password') }}</label>
+          <input id="password" type="password" v-model="password" required placeholder=" " />
         </div>
 
         <button type="submit" :disabled="loading" class="login-button">
           <template v-if="loading">
             <span class="spinner"></span>
-            <span>กำลังดำเนินการ...</span>
+            <span>{{ $t('login_logging_in') }}</span>
           </template>
           <template v-else>
-            <span>เข้าสู่ระบบ</span>
+            <span>{{ $t('login_btn') }}</span>
           </template>
         </button>
       </form>

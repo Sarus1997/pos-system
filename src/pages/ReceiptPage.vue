@@ -2,65 +2,65 @@
   <div id="app">
     <br>
     <div class="input-group">
-      <label for="order_id_input" class="input-group-label">ใส่เลขที่ใบสั่งซื้อ:</label>
+      <label for="order_id_input" class="input-group-label">{{ $t('eceipt_title') }}:</label>
       <input type="text" v-model="orderId" placeholder="Order ID" class="input-group-input" />
       <button @click="fetchReceiptData" class="input-get-data">
         <i class="fas fa-search"></i>
-        <h3>Get Data</h3>
+        <h3>{{ $t('receipt_get_btn') }}</h3>
       </button>
       <button @click="printReceipt" class="input-print">
         <i class="fas fa-print"></i>
-        <h3>Print</h3>
+        <h3>{{ $t('receipt_print_btn') }}</h3>
       </button>
     </div>
 
     <div class="receipt" v-if="receipt.order_id">
       <div class="header">
         <img id="img" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Wikimedia-logo.png" alt="Company Logo" />
-        <h1>ใบเสร็จรับเงิน</h1>
+        <h1>{{ $t('receipt_title_header') }}</h1>
       </div>
 
       <div class="info">
         <div>
-          <p><strong>เลขที่ใบเสร็จ:</strong> <span>{{ receipt.order_id }}</span></p>
-          <p><strong>วันที่:</strong> <span>{{ formattedOrderDate }}</span></p>
+          <p><strong>{{ $t('receipt_number_order') }}:</strong> <span>{{ receipt.order_id }}</span></p>
+          <p><strong>{{ $t('receipt_date') }}:</strong> <span>{{ formattedOrderDate }}</span></p>
         </div>
         <div>
-          <p><strong>เลขที่การชำระเงิน:</strong> <span>{{ receipt.payment_id }}</span></p>
-          <p><strong>วิธีการชำระเงิน:</strong> <span>{{ receipt.payment_method }}</span></p>
+          <p><strong>{{ $t('receipt_payment_number') }}:</strong> <span>{{ receipt.payment_id }}</span></p>
+          <p><strong>{{ $t('receipt_payment_by') }}:</strong> <span>{{ receipt.payment_method }}</span></p>
         </div>
       </div>
 
       <table class="products">
         <thead>
           <tr>
-            <th>รายการสินค้า</th>
-            <th>จำนวน</th>
-            <th>ราคาต่อชิ้น</th>
-            <th>ราคาที่ลด</th>
-            <th>ราคารวม</th>
+            <th>{{ $t('receipt_product_item') }}</th>
+            <th>{{ $t('receipt_quantity') }}</th>
+            <th>{{ $t('receipt_price_item') }}</th>
+            <th>{{ $t('receipt_price_discount') }}</th>
+            <th>{{ $t('receipt_price_total') }}</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="(product, index) in receipt.products" :key="index">
             <td>{{ product.product_name }}</td>
-            <td style="text-align: right;">{{ product.quantity ? product.quantity.toLocaleString('th-TH') + ' ชิ้น' :
-              '-' }}</td>
-            <td style="text-align: right;">{{ product.price ? product.price.toLocaleString('th-TH') + ' บาท' : '-' }}
-            </td>
-            <td style="text-align: right;">{{ product.discount ? product.discount.toLocaleString('th-TH') + ' บาท' : '-'
-              }}</td>
-            <td style="text-align: right;">{{ product.total ? product.total.toLocaleString('th-TH') + ' บาท' : '-' }}
-            </td>
+            <td style="text-align: right; font-size: 14px;">{{ product.quantity ?
+              product.quantity.toLocaleString('th-TH') + t('receipt_item') : '-' }}</td>
+            <td style="text-align: right; font-size: 14px;">{{ product.price ? product.price.toLocaleString('th-TH') +
+              t('receipt_bath') : '-' }}</td>
+            <td style="text-align: right; font-size: 14px;">{{ product.discount ?
+              product.discount.toLocaleString('th-TH') + t('receipt_bath') : '-' }}</td>
+            <td style="text-align: right; font-size: 14px;">{{ product.total ? product.total.toLocaleString('th-TH') +
+              t('receipt_bath') : '-' }}</td>
           </tr>
           <tr v-if="receipt.products.length === 0">
-            <td colspan="5" style="text-align: center;">ไม่มีข้อมูลสินค้า</td>
+            <td colspan="5" style="text-align: center;">{{ $t('receipt_no_product') }}</td>
           </tr>
         </tbody>
       </table>
 
       <div class="total">
-        <p>ยอดรวมทั้งสิ้น: <span>{{ formattedTotalAmount }}</span></p>
+        <p>{{ $t('receipt_total_all') }}: <span>{{ formattedTotalAmount }}</span></p>
       </div>
     </div>
 
@@ -71,6 +71,9 @@
 <script setup>
 import { ref, computed } from 'vue';
 import { fetchReceipt } from '../api/api.js';
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n(); // ✅ ใช้ useI18n เพื่อเข้าถึง `t` = translate
 
 const orderId = ref('');
 const receipt = ref({
@@ -94,20 +97,20 @@ const formattedTotalAmount = computed(() => {
     ? receipt.value.total_amount.toLocaleString('th-TH', {
       minimumFractionDigits: 2,
       maximumFractionDigits: 2,
-    }) + ' บาท'
+    }) + t('receipt_bath')
     : '-';
 });
 
 const fetchReceiptData = async () => {
   if (!orderId.value) {
-    errorMessage.value = 'กรุณาใส่เลขที่ใบสั่งซื้อ';
+    errorMessage.value = t('receipt_order_number');
     return;
   }
   errorMessage.value = '';
   try {
     const receiptData = await fetchReceipt(orderId.value);
     if (!receiptData) {
-      errorMessage.value = 'ไม่พบข้อมูลใบเสร็จ';
+      errorMessage.value = t('receipt_not_found');
       return;
     }
     receipt.value = {

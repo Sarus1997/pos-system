@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import PosPage from '../pages/PosPage.vue';
-import EceiptPage from '../pages/EceiptPage.vue';
+import ReceiptPage from '../pages/ReceiptPage.vue';
 import LoginPage from '../pages/LoginPage.vue';
 import ReportsPage from '../pages/ReportsPage.vue';
 import SettingsPage from '../pages/SettingsPage.vue';
@@ -18,8 +18,8 @@ const routes = [
     meta: { requiresAuth: true, roles: ['admin', 'manager', 'staff'] }
   },
   {
-    path: "/eceipt",
-    component: EceiptPage,
+    path: "/receipt",
+    component: ReceiptPage,
     meta: { requiresAuth: true, roles: ['admin', 'manager', 'staff'] }
   },
   {

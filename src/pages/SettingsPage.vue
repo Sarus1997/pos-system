@@ -8,21 +8,12 @@
         <option value="dark">{{ $t('theme_dark') }}</option>
       </select>
     </div>
-    <div class="setting-item language-picker">
-      <label for="language">{{ $t('language') }}:</label>
-      <select id="language" v-model="$i18n.locale" @change="changeLanguage">
-        <option value="en">English</option>
-        <option value="th">ไทย</option>
-      </select>
-    </div>
+
   </div>
 </template>
 
 <script setup>
 import { ref, watch } from 'vue';
-import { useI18n } from 'vue-i18n';
-
-const { locale } = useI18n();
 
 const theme = ref('light');
 const emailNotifications = ref(true);
@@ -30,10 +21,6 @@ const pushNotifications = ref(true);
 
 const updateTheme = () => {
   document.body.classList.toggle('dark-theme', theme.value === 'dark');
-};
-
-const changeLanguage = () => {
-  localStorage.setItem('language', locale.value);
 };
 
 watch(theme, updateTheme);
