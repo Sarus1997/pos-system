@@ -6,6 +6,10 @@ To set up the project, run the following command:
 ```sh
 npm install
 ```
+or
+```sh
+npm i
+```
 
 ## Development
 To compile and hot-reload for development, use:
