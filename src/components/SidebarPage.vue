@@ -116,7 +116,7 @@ defineExpose({
   display: flex;
   flex-direction: column;
   box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1);
-  border-right: 1px solid #374151;
+  border-right: 1px solid #37415135;
 }
 
 .sidebar-collapsed {
@@ -155,7 +155,7 @@ defineExpose({
 }
 
 .collapse-btn {
-  background: rgba(255, 255, 255, 0.1);
+  background-color: #1f2937;
   border: none;
   color: #fff;
   cursor: pointer;
@@ -193,7 +193,9 @@ defineExpose({
   display: flex;
   align-items: center;
   padding: 0.9rem 1.2rem;
-  color: #94a3b8;
+  color: #170c28;
+  font-weight: 700;
+  font-size: 1rem;
   text-decoration: none;
   border-radius: 0.75rem;
   transition: all 0.25s ease;
@@ -213,7 +215,7 @@ defineExpose({
 }
 
 .nav-item:hover {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(119, 244, 255, 0.404);
   color: #e2e8f0;
   transform: translateX(4px);
 }
@@ -223,7 +225,7 @@ defineExpose({
 }
 
 .nav-item.active {
-  background: rgba(125, 211, 252, 0.15);
+  background: rgba(234, 183, 183, 0.453);
   color: #7dd3fc;
 }
 
@@ -231,8 +233,9 @@ defineExpose({
   left: 0;
 }
 
+/* Icons */
 .nav-item.active .nav-icon {
-  color: #7dd3fc;
+  color: #b05144;
 }
 
 .nav-icon {
