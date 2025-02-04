@@ -1,11 +1,18 @@
 <template>
   <div class="settings-page">
-    <h1>Settings</h1>
-    <div class="theme-picker">
-      <label for="theme">Theme:</label>
+    <h1>{{ $t('settings') }}</h1>
+    <div class="setting-item theme-picker">
+      <label for="theme">{{ $t('theme') }}:</label>
       <select id="theme" v-model="theme" @change="updateTheme">
-        <option value="light">Light</option>
-        <option value="dark">Dark</option>
+        <option value="light">{{ $t('theme_light') }}</option>
+        <option value="dark">{{ $t('theme_dark') }}</option>
+      </select>
+    </div>
+    <div class="setting-item language-picker">
+      <label for="language">{{ $t('language') }}:</label>
+      <select id="language" v-model="$i18n.locale" @change="changeLanguage">
+        <option value="en">English</option>
+        <option value="th">ไทย</option>
       </select>
     </div>
   </div>
@@ -13,16 +20,28 @@
 
 <script setup>
 import { ref, watch } from 'vue';
+import { useI18n } from 'vue-i18n';
+
+const { locale } = useI18n();
 
 const theme = ref('light');
+const emailNotifications = ref(true);
+const pushNotifications = ref(true);
+
 const updateTheme = () => {
   document.body.classList.toggle('dark-theme', theme.value === 'dark');
 };
 
-watch(theme, () => {
-  updateTheme();
+const changeLanguage = () => {
+  localStorage.setItem('language', locale.value);
+};
+
+watch(theme, updateTheme);
+watch([emailNotifications, pushNotifications], () => {
+  console.log('Notification settings updated');
 });
 </script>
+
 
 <style>
 :root {
@@ -62,20 +81,37 @@ body.dark-theme {
   margin-bottom: 1.5rem;
 }
 
-.theme-picker {
-  margin-top: 2rem;
+.setting-item {
+  margin-top: 1.5rem;
   display: flex;
   align-items: center;
 }
 
-.theme-picker label {
+.setting-item label {
   margin-right: 1rem;
   font-weight: bold;
 }
 
-.theme-picker select {
+.setting-item select,
+.setting-item input[type="checkbox"] {
   padding: 0.5rem;
   border: 1px solid #ccc;
   border-radius: 4px;
+}
+
+.setting-item select:focus,
+.setting-item input[type="checkbox"]:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 5px var(--primary-color);
+}
+
+.notification-settings {
+  display: flex;
+  align-items: center;
+}
+
+.notification-settings input[type="checkbox"] {
+  margin-right: 0.5rem;
 }
 </style>

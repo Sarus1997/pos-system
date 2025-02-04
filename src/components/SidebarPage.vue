@@ -13,15 +13,22 @@
     <div class="divider"></div>
 
     <nav class="sidebar-nav">
-      <TransitionGroup name="menu-fade">
+      <TransitionGroup name="menu-slide">
         <div v-for="item in filteredMenuItems" :key="item.text" class="nav-item-wrapper">
           <router-link :to="item.link" class="nav-item" :class="{ 'active': $route.path === item.link }"
-            @click="item.action && item.action()">
+            @click="item.action && item.action()" v-tooltip="isCollapsed ? item.text : null">
             <font-awesome-icon :icon="item.icon" class="nav-icon" />
             <span class="nav-text">{{ item.text }}</span>
           </router-link>
         </div>
       </TransitionGroup>
+
+      <div class="language-selector" v-show="!isCollapsed">
+        <select v-model="$i18n.locale" @change="changeLanguage" class="language-select">
+          <option value="en">🇺🇸 English</option>
+          <option value="th">🇹🇭 ไทย</option>
+        </select>
+      </div>
     </nav>
 
     <footer class="sidebar-footer">
@@ -105,14 +112,15 @@ defineExpose({
   background-color: #1f2937;
   height: 100vh;
   width: 280px;
-  transition: all 0.50s cubic-bezier(0.5, 0, 0.5, 1);
+  transition: all 0.35s cubic-bezier(0.5, 0, 0.5, 1);
   display: flex;
   flex-direction: column;
   box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1);
+  border-right: 1px solid #374151;
 }
 
 .sidebar-collapsed {
-  width: 85px;
+  width: 90px;
 }
 
 .sidebar-header {
@@ -134,7 +142,12 @@ defineExpose({
 
 .logo-icon {
   font-size: 1.5rem;
-  color: #89f5ea;
+  color: #7dd3fc;
+  transition: transform 0.3s ease;
+}
+
+.logo-link:hover .logo-icon {
+  transform: rotate(-15deg);
 }
 
 .sidebar-collapsed .logo-text {
@@ -142,19 +155,26 @@ defineExpose({
 }
 
 .collapse-btn {
-  background: none;
+  background: rgba(255, 255, 255, 0.1);
   border: none;
   color: #fff;
   cursor: pointer;
-  padding: 0.5rem;
-  font-size: 1.25rem;
-  transition: color 0.2s ease;
+  padding: 0.6rem;
+  border-radius: 0.5rem;
+  font-size: 1.1rem;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(4px);
+}
+
+.collapse-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: scale(1.05);
 }
 
 .divider {
   height: 1px;
-  background-color: #374151;
-  margin: 0.5rem 1rem;
+  background: linear-gradient(90deg, transparent 0%, #334155 50%, transparent 100%);
+  margin: 1rem 1.5rem;
 }
 
 .sidebar-nav {
@@ -172,17 +192,53 @@ defineExpose({
 .nav-item {
   display: flex;
   align-items: center;
-  padding: 0.75rem 1rem;
-  color: #fff;
+  padding: 0.9rem 1.2rem;
+  color: #94a3b8;
   text-decoration: none;
-  border-radius: 0.5rem;
-  transition: all 0.2s ease;
-  gap: 1rem;
+  border-radius: 0.75rem;
+  transition: all 0.25s ease;
+  gap: 1.25rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.nav-item::before {
+  content: '';
+  position: absolute;
+  left: -100%;
+  width: 4px;
+  height: 100%;
+  background: #fcc97d;
+  transition: left 0.3s ease;
+}
+
+.nav-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: #e2e8f0;
+  transform: translateX(4px);
+}
+
+.nav-item:hover .nav-icon {
+  color: #7dd3fc;
+}
+
+.nav-item.active {
+  background: rgba(125, 211, 252, 0.15);
+  color: #7dd3fc;
+}
+
+.nav-item.active::before {
+  left: 0;
+}
+
+.nav-item.active .nav-icon {
+  color: #7dd3fc;
 }
 
 .nav-icon {
-  font-size: 1.25rem;
-  min-width: 1.25rem;
+  font-size: 1.3rem;
+  min-width: 1.5rem;
+  transition: color 0.2s ease;
 }
 
 .nav-item:hover {
@@ -196,11 +252,13 @@ defineExpose({
 }
 
 .sidebar-footer {
-  padding: 1rem;
-  background-color: #2d3748;
-  font-size: 0.875rem;
-  color: #9ca3af;
+  padding: 1.5rem;
+  background: rgba(0, 0, 0, 0.2);
+  font-size: 0.8rem;
+  color: #64748b;
   text-align: center;
+  line-height: 1.4;
+  backdrop-filter: blur(4px);
 }
 
 .sidebar-collapsed .sidebar-footer {
@@ -208,26 +266,38 @@ defineExpose({
 }
 
 /* Transitions */
-.menu-fade-enter-active,
-.menu-fade-leave-active {
-  transition: all 0.3s ease;
+.language-selector {
+  margin-top: 2rem;
+  padding: 0 1rem;
 }
 
-.menu-fade-enter-from,
-.menu-fade-leave-to {
+.language-select {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid #334155;
+  color: #fff;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.language-select:hover {
+  border-color: #475569;
+}
+
+.menu-slide-enter-active,
+.menu-slide-leave-active {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.menu-slide-enter-from {
   opacity: 0;
-  transform: translateX(-20px);
+  transform: translateX(-30px);
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-  .sidebar {
-    position: fixed;
-    z-index: 50;
-  }
-
-  .sidebar-collapsed {
-    transform: translateX(-100%);
-  }
+.menu-slide-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
 }
 </style>

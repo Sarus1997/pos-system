@@ -11,14 +11,9 @@
           <img :src="avatar || '/api/placeholder/120/120'" class="avatar" :class="{ 'avatar-disabled': !isEditing }" />
           <div v-if="isEditing" class="avatar-overlay">
             <label for="avatar" class="avatar-upload">
-              <svg xmlns="http://www.w3.org/2000/svg" class="upload-icon" fill="none" viewBox="0 0 24 24"
-                stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-              </svg>
-              <span>อัพโหลดรูป</span>
+              <input id="avatar" type="file" @change="handleAvatarChange" class="input avatar-input" accept="image/*" />
+              <span>เลือกรูป</span>
             </label>
-            <input id="avatar" type="text" v-model="avatar" class="input avatar-input" placeholder="URL รูปโปรไฟล์" />
           </div>
         </div>
       </div>
@@ -161,25 +156,38 @@ const enableEdit = () => {
 };
 
 const saveChanges = async () => {
+  if (!userId.value || !username.value || !first_name.value || !last_name.value || !email.value) {
+    alert("กรุณากรอกข้อมูลให้ครบถ้วน");
+    return;
+  }
+
   try {
+    const payload = {
+      user_id: userId.value,
+      username: username.value,
+      password: password.value || undefined,
+      role: role.value === "staff" ? "staff" : role.value,
+      first_name: first_name.value,
+      last_name: last_name.value,
+      bio: bio.value,
+      date_of_birth: date_of_birth.value,
+      avatar: avatar.value,
+      email: email.value,
+      phone_number: phone_number.value,
+      address: address.value,
+      position: role.value === "staff" ? "" : position.value,
+    };
+
+    //* ลบข้อมูลที่ไม่มีค่า */
+    Object.keys(payload).forEach(key => payload[key] === undefined && delete payload[key]);
+
     const response = await fetch("http://localhost:4000/api2/update_user", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        user_id: userId.value,
-        username: username.value,
-        password: password.value,
-        role: role.value,
-        first_name: first_name.value,
-        last_name: last_name.value,
-        bio: bio.value,
-        date_of_birth: date_of_birth.value,
-        avatar: avatar.value,
-        email: email.value,
-        phone_number: phone_number.value,
-        address: address.value,
-        position: position.value,
-      }),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Token eyJhY2NvdW50IjoiQUNDT1VOVF9TWU5DOjE3MzExNDM4MTI4NTkuODk2MjAzIiwiaWQiOiJDVVNUT01FUjoxNzMwNjg1NTY0Mzg0LjMwMzAyMCIsImdyb3VwIjoidXNlcjpjdXN0b21lciIsIm9mZmljZV9pZCI6Ik9GRklDRTowMDEiLCJkYXRlIjoxNzMxNTYwMDg5Mzc0fQ==!IcYueH98Vx4wrffC57Xh39pLSYwu4SNW0WfTzQcs75M="
+      },
+      body: JSON.stringify(payload),
     });
 
     const result = await response.json();
@@ -187,14 +195,15 @@ const saveChanges = async () => {
       alert("บันทึกข้อมูลเรียบร้อยแล้ว!");
       isEditing.value = false;
     } else {
-      console.error("Error updating user:", result);
-      alert("ไม่สามารถบันทึกข้อมูลได้");
+      console.error("Error updating user:", result.error || result);
+      alert(result.error || "ไม่สามารถบันทึกข้อมูลได้");
     }
   } catch (error) {
     console.error("Error updating user:", error);
     alert("เกิดข้อผิดพลาดในการเชื่อมต่อกับเซิร์ฟเวอร์");
   }
 };
+
 
 const handleLogout = () => {
   localStorage.removeItem("user");
