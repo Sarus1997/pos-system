@@ -6,7 +6,7 @@ const messages = {
     //*  SidebarPage
     report: "Report",
     menu_pos: "Product List",
-    eceipt: "Eceipt",
+    receipt: "Eceipt",
     profile: "Profile",
 
     //*  SidebarPage Footer
@@ -63,7 +63,7 @@ const messages = {
     //*  SidebarPage
     report: "รายงาน",
     menu_pos: "รายการสินค้า",
-    eceipt: "ใบเสร็จ",
+    receipt: "ใบเสร็จ",
     profile: "ข้อมูลส่วนตัว",
 
     //* LoginPage
