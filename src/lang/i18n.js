@@ -24,7 +24,9 @@ const messages = {
     login_subtitle: "Please login to continue",
     login_username: "Username",
     login_password: "Password",
+    login_logging_in: "Logging in...",
     login_btn: "Login",
+
 
     //* ReceiptPage
     receipt_title: "Enter order number",
@@ -71,6 +73,7 @@ const messages = {
     login_subtitle: "กรุณาเข้าสู่ระบบเพื่อดำเนินการต่อ",
     login_username: "ชื่อผู้ใช้งาน",
     login_password: "รหัสผ่าน",
+    login_logging_in: "กําลังเข้าสู่ระบบ...",
     login_btn: "เข้าสู่ระบบ",
 
     //* ReceiptPage
