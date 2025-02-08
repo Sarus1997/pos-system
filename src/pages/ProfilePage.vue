@@ -2,8 +2,8 @@
   <div class="container">
     <div class="card">
       <div class="header">
-        <h1 class="title">ข้อมูลผู้ใช้</h1>
-        <p class="subtitle">จัดการข้อมูลส่วนตัวของคุณ</p>
+        <h1 class="title">{{ $t('title_profile') }}</h1>
+        <p class="subtitle">{{ $t('subtitle_profile') }}</p>
       </div>
 
       <div class="profile-section">
@@ -12,7 +12,7 @@
           <div v-if="isEditing" class="avatar-overlay">
             <label for="avatar" class="avatar-upload">
               <input id="avatar" type="file" @change="handleAvatarChange" class="input avatar-input" accept="image/*" />
-              <span>เลือกรูป</span>
+              <span>{{ $t('upload_avatar') }}</span>
             </label>
           </div>
         </div>
@@ -20,27 +20,27 @@
 
       <div class="form-sections">
         <div class="section">
-          <h2 class="section-title">ข้อมูลบัญชี</h2>
+          <h2 class="section-title">{{ $t('profile_section_title') }}</h2>
           <div class="form-group">
-            <label for="username" class="label">ชื่อผู้ใช้</label>
+            <label for="username" class="label">{{ $t('username') }}</label>
             <div class="input-group">
               <span class="input-icon">@</span>
               <input id="username" type="text" v-model="username" :readonly="!isEditing" class="input with-icon"
-                placeholder="กรอกชื่อผู้ใช้ของคุณ" />
+                placeholder="{{ $t('ple_name') }}" />
             </div>
           </div>
 
           <div class="form-group">
-            <label for="password" class="label">รหัสผ่าน</label>
+            <label for="password" class="label">{{ $t('password') }}</label>
             <div class="input-group">
               <span class="input-icon">🔒</span>
               <input id="password" type="password" v-model="password" :readonly="!isEditing" class="input with-icon"
-                placeholder="กรอกรหัสผ่านของคุณ" />
+                placeholder="{{ $t('ple_password') }}" />
             </div>
           </div>
 
           <div class="form-group">
-            <label for="email" class="label">อีเมล</label>
+            <label for="email" class="label">{{ $t('email') }}</label>
             <div class="input-group">
               <span class="input-icon">✉️</span>
               <input id="email" type="email" v-model="email" :readonly="!isEditing" class="input with-icon"
@@ -50,60 +50,61 @@
         </div>
 
         <div class="section">
-          <h2 class="section-title">ข้อมูลส่วนตัว</h2>
+          <h2 class="section-title">{{ $t('personal_section_title') }}</h2>
           <div class="form-row">
             <div class="form-group half">
-              <label for="first_name" class="label">ชื่อจริง</label>
+              <label for="first_name" class="label">{{ $t('profile_personal_name') }}</label>
               <input id="first_name" type="text" v-model="first_name" :readonly="!isEditing" class="input"
-                placeholder="ชื่อจริง" />
+                placeholder="{{ $t('profile_personal_name') }}" />
             </div>
             <div class="form-group half">
-              <label for="last_name" class="label">นามสกุล</label>
+              <label for="last_name" class="label">{{ $t('profile_personal_lastname') }}</label>
               <input id="last_name" type="text" v-model="last_name" :readonly="!isEditing" class="input"
-                placeholder="นามสกุล" />
+                placeholder="{{ $t('profile_personal_lastname') }}" />
             </div>
           </div>
 
           <div class="form-row">
             <div class="form-group half">
-              <label for="date_of_birth" class="label">วันเกิด</label>
+              <label for="date_of_birth" class="label">{{ $t('profile_personal_birthday') }}</label>
               <input id="date_of_birth" type="text" v-model="date_of_birth" :readonly="!isEditing" class="input" />
             </div>
             <div class="form-group half">
-              <label for="phone_number" class="label">เบอร์โทรศัพท์</label>
+              <label for="phone_number" class="label">{{ $t('profile_personal_tel') }}</label>
               <input id="phone_number" type="tel" v-model="phone_number" :readonly="!isEditing" class="input"
                 placeholder="0XX-XXX-XXXX" />
             </div>
           </div>
 
           <div class="form-group">
-            <label for="address" class="label">ที่อยู่</label>
+            <label for="address" class="label">{{ $t('profile_personal_address') }}</label>
             <textarea id="address" v-model="address" :readonly="!isEditing" class="input"
-              placeholder="กรอกที่อยู่ของคุณ"></textarea>
+              placeholder="{{ $t('ple_address') }}"></textarea>
           </div>
         </div>
 
         <div class="section">
-          <h2 class="section-title">ข้อมูลการทำงาน</h2>
+          <h2 class="section-title">{{ $t('work_section_title') }}</h2>
           <div class="form-group">
-            <label for="position" class="label">ตำแหน่งงาน</label>
+            <label for="position" class="label">{{ $t('profile_work_position') }}</label>
             <input id="position" type="text" v-model="position" :readonly="!isEditing" class="input"
-              placeholder="ตำแหน่งงานปัจจุบัน" />
+              placeholder="{{ $t('profile_work_position_current') }}" />
           </div>
 
           <div class="form-group">
-            <label for="role" class="label">บทบาท</label>
+            <label for="role" class="label">{{ $t('profile_role') }}</label>
             <select id="role" v-model="role" :disabled="!isEditing" class="input">
-              <option value="">เลือกบทบาท</option>
-              <option value="admin">ผู้ดูแลระบบ</option>
-              <option value="user">ผู้ใช้งานทั่วไป</option>
+              <option value="">{{ $t('profile_selected_role') }}</option>
+              <option value="admin">{{ $t('profile_role_admin') }}</option>
+              <option value="manager">{{ $t('profile_role_manager') }}</option>
+              <option value="user">{{ $t('profile_role_user') }}</option>
             </select>
           </div>
 
           <div class="form-group">
-            <label for="bio" class="label">เกี่ยวกับตัวคุณ</label>
+            <label for="bio" class="label">{{ $t('profile_personal_bio') }}</label>
             <textarea id="bio" v-model="bio" :readonly="!isEditing" class="input textarea-bio"
-              placeholder="เล่าเกี่ยวกับตัวคุณสักหน่อย..."></textarea>
+              placeholder="{{ $t('ple_bio') }}"></textarea>
           </div>
         </div>
       </div>
@@ -111,20 +112,20 @@
       <div class="buttons">
         <button v-if="!isEditing" @click="enableEdit" class="btn btn-primary">
           <span class="btn-icon">✏️</span>
-          แก้ไขข้อมูล
+          {{ $t('profile_personal_edit') }}
         </button>
         <template v-else>
           <button @click="saveChanges" class="btn btn-primary">
             <span class="btn-icon">💾</span>
-            บันทึกข้อมูล
+            {{ $t('profile_personal_save') }}
           </button>
           <button @click="isEditing = false" class="btn btn-secondary">
-            ยกเลิก
+            {{ $t('profile_personal_cancel') }}
           </button>
         </template>
         <button @click="handleLogout" class="btn btn-danger">
           <span class="btn-icon">🚪</span>
-          ออกจากระบบ
+          {{ $t('profile_logout') }}
         </button>
       </div>
     </div>
