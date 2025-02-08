@@ -79,6 +79,8 @@ const messages = {
     profile_personal_save: "Save information",
     profile_personal_cancel: "Cancel",
     profile_logout: "Logout",
+    profile_non_save: "Unable to save information",
+    profile_error: "Error connecting to server",
 
   },
 
@@ -160,6 +162,8 @@ const messages = {
     profile_personal_save: "บันทึกข้อมูล",
     profile_personal_cancel: "ยกเลิก",
     profile_logout: "ออกจากระบบ",
+    profile_non_save: "ไม่สามารถบันทึกข้อมูลได้",
+    profile_error: "เกิดข้อผิดพลาดในการเชื่อมต่อกับเซิร์ฟเวอร์",
 
   }
 };

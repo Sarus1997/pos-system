@@ -136,6 +136,9 @@
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n() // ✅ ใช้ useI18n เพื่อเข้าถึง `t`  = translate
+
 const router = useRouter();
 const username = ref("");
 const password = ref("");
@@ -197,11 +200,11 @@ const saveChanges = async () => {
       isEditing.value = false;
     } else {
       console.error("Error updating user:", result.error || result);
-      alert(result.error || "ไม่สามารถบันทึกข้อมูลได้");
+      alert(result.error || t('profile_non_save'));
     }
   } catch (error) {
     console.error("Error updating user:", error);
-    alert("เกิดข้อผิดพลาดในการเชื่อมต่อกับเซิร์ฟเวอร์");
+    alert(t('profile_error'));
   }
 };
 
