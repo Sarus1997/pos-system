@@ -1,16 +1,16 @@
 <template>
   <div class="cart-container">
-    <h2 class="cart-title">รายการสินค้า</h2>
+    <h2 class="cart-title">{{ $t('cart_table_title') }}</h2>
 
     <div class="table-container">
       <table class="cart-table">
         <thead>
           <tr>
-            <th>สินค้า</th>
-            <th>จำนวน</th>
-            <th>ราคา</th>
-            <th>รวม</th>
-            <th>จัดการ</th>
+            <th>{{ $t('cart_table_product') }}</th>
+            <th>{{ $t('cart_table_quantity') }}</th>
+            <th>{{ $t('cart_table_price') }}</th>
+            <th>{{ $t('cart_table_total') }}</th>
+            <th>{{ $t('cart_table_remove') }}</th>
           </tr>
         </thead>
         <tbody>
@@ -53,12 +53,12 @@
 
     <div class="cart-summary">
       <div class="total-amount">
-        <span>ยอดรวมทั้งหมด:</span>
+        <span>{{ $t('cart_table_toral_all') }}: </span>
         <span class="total-price">{{ formatPrice(totalAmount) }} ฿</span>
       </div>
 
       <button @click="completeSale" class="complete-btn">
-        ยืนยันการสั่งซื้อ
+        {{ $t('cart_table_complete_sale') }}
       </button>
     </div>
   </div>

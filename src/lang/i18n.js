@@ -82,6 +82,27 @@ const messages = {
     profile_non_save: "Unable to save information",
     profile_error: "Error connecting to server",
 
+    //* PosPage
+    pos_title: "Product",
+    prev_page: "Previous",
+    next_page: "Next",
+    pos_cart_title: "Shopping Cart",
+    pos_search_product: "Search product...",
+    pos_cart_total: "Total",
+    pos_cart_alert: "Please add products to cart",
+    pos_cart_bath: "Bath",
+    pos_cart_success_total: "Payment completed! Total:",
+
+    //* CartTablePage
+    cart_table_title: "Product List",
+    cart_table_product: "Product",
+    cart_table_price: "Price",
+    cart_table_quantity: "Quantity",
+    cart_table_total: "Total",
+    cart_table_remove: "Edit",
+    cart_table_toral_all: "Total All",
+    cart_table_complete_sale: "Confirm order",
+
   },
 
   // TODO:  ภาษาไทย
@@ -164,6 +185,27 @@ const messages = {
     profile_logout: "ออกจากระบบ",
     profile_non_save: "ไม่สามารถบันทึกข้อมูลได้",
     profile_error: "เกิดข้อผิดพลาดในการเชื่อมต่อกับเซิร์ฟเวอร์",
+
+    //* PosPage
+    pos_title: "สินค้า",
+    prev_page: "ก่อนหน้า",
+    next_page: "ถัดไป",
+    pos_cart_title: "ตะกร้าสินค้า",
+    pos_search_product: "ค้นหาสินค้า...",
+    pos_cart_total: "รวม",
+    pos_cart_alert: "กรุณาเพิ่มสินค้าในตะกร้า",
+    pos_cart_bath: "บาท",
+    pos_cart_success_total: "ชำระเงินสำเร็จ! รวม:",
+
+    //* CartTablePage
+    cart_table_title: "รายการสินค้า",
+    cart_table_product: "สินค้า",
+    cart_table_price: "ราคา",
+    cart_table_quantity: "จำนวน",
+    cart_table_total: "รวม",
+    cart_table_remove: "แก้ไข",
+    cart_table_toral_all: "ยอดรวมทั้งหมด",
+    cart_table_complete_sale: "ยืนยันการสั่งซื้อ",
 
   }
 };

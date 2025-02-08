@@ -5,9 +5,9 @@
       <div class="card products-card">
         <div class="card-header">
           <div class="header-content">
-            <h2 class="header-title">สินค้า</h2>
+            <h2 class="header-title">{{ $t('pos_title') }}</h2>
             <div class="search-container">
-              <input type="text" v-model="searchQuery" placeholder="ค้นหาสินค้า..." class="search-input">
+              <input type="text" v-model="searchQuery" :placeholder="$t('pos_search_product')" class="search-input">
               <span class="search-icon">🔍</span>
             </div>
           </div>
@@ -22,7 +22,7 @@
           <div class="pagination-container">
             <button @click="prevPage" :disabled="currentPage === 1" class="pagination-btn"
               :class="{ 'disabled': currentPage === 1 }">
-              <span class="arrow">←</span> ก่อนหน้า
+              <span class="arrow">←</span> {{ $t('prev_page') }}
             </button>
 
             <div class="page-numbers">
@@ -34,7 +34,7 @@
 
             <button @click="nextPage" :disabled="currentPage === totalPages" class="pagination-btn"
               :class="{ 'disabled': currentPage === totalPages }">
-              ถัดไป <span class="arrow">→</span>
+              {{ $t('next_page') }} <span class="arrow">→</span>
             </button>
           </div>
         </div>
@@ -46,9 +46,9 @@
       <div class="card cart-card">
         <div class="card-header">
           <div class="header-content">
-            <h2 class="header-title">ตะกร้าสินค้า</h2>
+            <h2 class="header-title">{{ $t('pos_cart_title') }}</h2>
             <div v-if="cartTotal" class="cart-total">
-              <span class="total-label">รวม:</span>
+              <span class="total-label">{{ $t('pos_cart_total') }}:</span>
               <span class="total-amount">{{ formatPrice(cartTotal) }} บาท</span>
             </div>
           </div>
@@ -69,6 +69,9 @@ import { ref, computed, onMounted, watch } from 'vue';
 import { fetchProductList } from '../api/api';
 import ProductCard from '../components/ProductCardPage.vue';
 import CartTable from '../components/CartTablePage.vue';
+
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n(); // ✅ ใช้ useI18n เพื่อเข้าถึง `t` = translate
 
 // State
 const products = ref([]);
@@ -158,12 +161,12 @@ const removeItem = (productId) => {
 
 const completeSale = () => {
   if (cart.value.length === 0) {
-    alert('กรุณาเพิ่มสินค้าในตะกร้า');
+    alert(t('pos_cart_alert'));
     return;
   }
 
   const total = formatPrice(cartTotal.value);
-  alert(`ชำระเงินสำเร็จ! ยอดรวม: ${total} บาท`);
+  alert(t('pos_cart_success_total') + `${total}` + t('pos_cart_bath'));
   cart.value = [];
 };
 

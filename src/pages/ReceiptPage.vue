@@ -2,7 +2,7 @@
   <div id="app">
     <br>
     <div class="input-group">
-      <label for="order_id_input" class="input-group-label">{{ $t('eceipt_title') }}:</label>
+      <label for="order_id_input" class="input-group-label">{{ $t('receipt_title') }}:</label>
       <input type="text" v-model="orderId" placeholder="Order ID" class="input-group-input" />
       <button @click="fetchReceiptData" class="input-get-data">
         <i class="fas fa-search"></i>
